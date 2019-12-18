@@ -1,0 +1,5 @@
+InFrame/packages
+InFrame/bin
+InFrame/obj
+InFrame/InFrameAPI.csproj.user
+*.log
