@@ -1,5 +1,7 @@
-InFrame/packages
-InFrame/bin
-InFrame/obj
-InFrame/InFrameAPI.csproj.user
+InFrameCore/packages
+InFrameCore/InFrameAPI/bin
+InFrameCore/InFrameAPI/obj
+InFrameCore/InFrameAPI/InFrameAPI.csproj.user
 *.log
+InFrameCore/InFrameDAL/bin
+InFrameCore/InFrameDAL/obj
