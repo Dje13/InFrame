@@ -184,12 +184,19 @@ create table Form (
 	title VARCHAR(50) NOT NULL,
 	columnNumber INT NOT NULL,
 	active BIT NOT NULL, -- actif/inactif
+	validationMessage VARCHAR(100), -- A RAJOUTER -- message apparaissant à la validation du formulaire (facultatif)
+	cssClass VARCHAR(MAX),
 	behavior INT NOT NULL --configurationLabel
 )
 
 create table FormGroup (
 	id BIGINT IDENTITY(1,1) NOT NULL,	
 	formId BIGINT NOT NULL,
+	groupLabel VARCHAR(50), -- A RAJOUTER -- titre du groupe (facultatif)
+	columnIndex INT NOT NULL,
+	groupOrder INT NOT NULL,
+	active BIT NOT NULL, -- actif/inactif
+	cssClass VARCHAR(MAX),
 	columnIndex INT NOT NULL,
 	groupOrder INT NOT NULL,
 	active BIT NOT NULL, -- actif/inactif
@@ -211,10 +218,7 @@ create table FormField (
 	defaultValue VARCHAR(50) NOT NULL,
 	active BIT NOT NULL, -- actif/inactif
 	workflowState BIGINT NULL,
+	cssClass VARCHAR(MAX),
 	behavior INT NOT NULL -- Label visible, ...
 )
-
-
-
-
 
