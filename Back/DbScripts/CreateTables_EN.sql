@@ -197,6 +197,9 @@ create table FormGroup (
 	groupOrder INT NOT NULL,
 	active BIT NOT NULL, -- actif/inactif
 	cssClass VARCHAR(MAX),
+	columnIndex INT NOT NULL,
+	groupOrder INT NOT NULL,
+	active BIT NOT NULL, -- actif/inactif
 	behavior INT NOT NULL, -- Label visible, bloc titre visible,type de groupe...
 )
 
@@ -218,3 +221,4 @@ create table FormField (
 	cssClass VARCHAR(MAX),
 	behavior INT NOT NULL -- Label visible, ...
 )
+

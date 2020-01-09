@@ -5,3 +5,5 @@ InFrameCore/InFrameAPI/InFrameAPI.csproj.user
 *.log
 InFrameCore/InFrameDAL/bin
 InFrameCore/InFrameDAL/obj
+InFrameCore/InFrameTools/bin
+InFrameCore/InFrameTools/obj
