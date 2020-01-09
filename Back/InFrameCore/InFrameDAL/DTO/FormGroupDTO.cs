@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
-namespace InFrameDAL.Models
+namespace InFrameDAL
 {
-    public partial class FormGroup
+    public class FormGroupDTO
     {
-        public FormGroup()
-        {
-            FormField = new HashSet<FormField>();
-        }
-
         public long Id { get; set; }
         public long FormConfigId { get; set; }
         public string GroupLabel { get; set; }
@@ -18,8 +14,5 @@ namespace InFrameDAL.Models
         public bool Active { get; set; }
         public string CssClass { get; set; }
         public int Behavior { get; set; }
-
-        public virtual FormConfig FormConfig { get; set; }
-        public virtual ICollection<FormField> FormField { get; set; }
     }
 }

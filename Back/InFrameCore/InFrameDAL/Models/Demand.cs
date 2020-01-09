@@ -15,11 +15,13 @@ namespace InFrameDAL.Models
         public long EtatId { get; set; }
         public long WorkFlowId { get; set; }
         public long DemandTypeid { get; set; }
+        public long? WorkflowStateId { get; set; }
         public string Author { get; set; }
         public DateTime CreateDate { get; set; }
 
         public virtual DemandType DemandType { get; set; }
         public virtual WorkFlow WorkFlow { get; set; }
+        public virtual WorkflowState WorkflowState { get; set; }
         public virtual ICollection<ValueDemandDynProp> ValueDemandDynProp { get; set; }
         public virtual ICollection<ValueDemandDynPropHisto> ValueDemandDynPropHisto { get; set; }
     }

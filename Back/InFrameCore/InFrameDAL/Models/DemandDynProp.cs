@@ -15,7 +15,7 @@ namespace InFrameDAL.Models
         public long Id { get; set; }
         public string DemandDynPropName { get; set; }
         public string DemandType { get; set; }
-        public int WorkflowState { get; set; }
+        public int Active { get; set; }
 
         public virtual ICollection<DemandTypeDemandDynProp> DemandTypeDemandDynProp { get; set; }
         public virtual ICollection<ValueDemandDynProp> ValueDemandDynProp { get; set; }

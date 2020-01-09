@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace InFrameTools
 {
-    public class ToolFactory
+    public class ToolBox
     {
 
         /// <summary>

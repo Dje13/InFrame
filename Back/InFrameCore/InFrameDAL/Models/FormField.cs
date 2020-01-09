@@ -6,8 +6,7 @@ namespace InFrameDAL.Models
     public partial class FormField
     {
         public long Id { get; set; }
-        public long GroupId { get; set; }
-        public long DemandTypeId { get; set; }
+        public long FormGroupId { get; set; }
         public string FieldName { get; set; }
         public string FieldType { get; set; }
         public string FieldLabel { get; set; }
@@ -17,7 +16,11 @@ namespace InFrameDAL.Models
         public string Tooltip { get; set; }
         public string DefaultValue { get; set; }
         public bool Active { get; set; }
-        public long? WorkflowState { get; set; }
+        public long? WorkflowStateId { get; set; }
+        public string CssClass { get; set; }
         public int Behavior { get; set; }
+
+        public virtual FormGroup FormGroup { get; set; }
+        public virtual WorkflowState WorkflowState { get; set; }
     }
 }

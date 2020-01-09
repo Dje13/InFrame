@@ -7,7 +7,7 @@ CREATE TABLE WorkflowState (
 	stateShortName VARCHAR(10) NOT NULL,
 	stateDescription VARCHAR(4000) NULL,
 	icon VARCHAR(400) NULL,
-	workflowState INT NOT NULL,
+	active INT NOT NULL,
 	CONSTRAINT PK_WorkflowState PRIMARY KEY CLUSTERED (id)
 )
 
@@ -18,7 +18,7 @@ CREATE TABLE Transition(
 	transitionShortName VARCHAR(10) NOT NULL,
 	description VARCHAR(4000) NULL,
 	icon VARCHAR(400) NULL,
-	workflowState INT NOT NULL,
+	active INT NOT NULL,
 	endStateId BIGINT NOT NULL,
 	actions VARCHAR(4000) NULL,
 	behavior INT, /*par exemple nécessite une validation du formulaire, necessite un commentaire */
@@ -64,7 +64,7 @@ CREATE TABLE WorkFlow_Transition (
 	id BIGINT IDENTITY(1,1) NOT NULL,
 	workflowId BIGINT NOT NULL,
 	transitionId BIGINT NOT NULL,
-	workflowState INT NOT NULL,
+	active INT NOT NULL,
 	CONSTRAINT PK_WorkFlow_Transition PRIMARY KEY CLUSTERED (ID)
 )
 ALTER TABLE WorkFlow_Transition  WITH CHECK ADD  CONSTRAINT fk_WorkFlow_Transition_transitionId FOREIGN KEY(TransitionId)
@@ -85,7 +85,7 @@ CREATE TABLE DemandType (
 	demandTypeShortName VARCHAR(10) NOT NULL,
 	demandTypeDescription VARCHAR(4000) NULL,
 	icon VARCHAR(400) NULL,
-	workflowState INT NOT NULL,
+	active INT NOT NULL,
 	workflowId BIGINT NOT NULL,/* @@TODO CHANGER le nom*/
 	CONSTRAINT PK_DemandType PRIMARY KEY CLUSTERED (id)
 )
@@ -98,7 +98,7 @@ CREATE TABLE DemandDynProp (
 	id BIGINT IDENTITY(1,1) NOT NULL,
 	demandDynPropName VARCHAR(255) NOT NULL,
 	demandType VARCHAR(255) NOT NULL, /* string, date, entier, float, decimal, list, coordonnées spatiale */ -- anciennement nature 
-	workflowState INT NOT NULL,
+	active INT NOT NULL,
 	CONSTRAINT PK_DemandDynProp PRIMARY KEY CLUSTERED (id)
 )
 
@@ -107,7 +107,7 @@ CREATE TABLE DemandType_DemandDynProp (
 	id BIGINT IDENTITY(1,1) NOT NULL,
 	demandDynPropId BIGINT NOT NULL,
 	demandTypeId BIGINT NOT NULL,
-	workflowState INT NOT NULL,
+	active INT NOT NULL,
 	CONSTRAINT PK_DemandType_DemandDynProp PRIMARY KEY CLUSTERED (id)
 )
 
@@ -124,6 +124,7 @@ CREATE TABLE Demand (
 	etatId BIGINT NOT NULL,
 	workFlowId BIGINT NOT NULL,
 	demandTypeid BIGINT NOT NULL,
+	workflowStateId BIGINT NULL,
 	author VARCHAR(200) NOT NULL,
 	createDate DATETIME NOT NULL,
 	CONSTRAINT PK_Demand PRIMARY KEY CLUSTERED (ID)
@@ -134,6 +135,10 @@ REFERENCES DemandType (id)
 
 ALTER TABLE Demand WITH CHECK ADD  CONSTRAINT fk_Demand_workflowId FOREIGN KEY(workflowId)
 REFERENCES Workflow (id)
+
+ALTER TABLE Demand WITH CHECK ADD  CONSTRAINT fk_Demand_workflowStateId FOREIGN KEY(workflowStateId)
+REFERENCES WorkflowState (id)
+
 
 
 CREATE TABLE ValueDemandDynProp (
@@ -179,35 +184,40 @@ REFERENCES Demand (id)
 ALTER TABLE ValueDemandDynPropHisto  WITH CHECK ADD  CONSTRAINT fk_ValueDemandDynPropHisto_demandDynPropId FOREIGN KEY(demandDynPropId)
 REFERENCES DemandDynProp (id)
 
-create table Form (
+create table FormConfig (
 	id BIGINT IDENTITY(1,1) NOT NULL,
+	demandTypeId BIGINT NOT NULL,
 	title VARCHAR(50) NOT NULL,
 	columnNumber INT NOT NULL,
 	active BIT NOT NULL, -- actif/inactif
 	validationMessage VARCHAR(100), -- A RAJOUTER -- message apparaissant à la validation du formulaire (facultatif)
 	cssClass VARCHAR(MAX),
-	behavior INT NOT NULL --configurationLabel
+	behavior INT NOT NULL, --configurationLabel
+	CONSTRAINT PK_FormConfig PRIMARY KEY CLUSTERED (ID)
 )
+
+ALTER TABLE FormConfig  WITH CHECK ADD  CONSTRAINT fk_FormConfig_demandTypeId FOREIGN KEY(demandTypeId)
+REFERENCES DemandType (id)
 
 create table FormGroup (
 	id BIGINT IDENTITY(1,1) NOT NULL,	
-	formId BIGINT NOT NULL,
+	formConfigId BIGINT NOT NULL,
 	groupLabel VARCHAR(50), -- A RAJOUTER -- titre du groupe (facultatif)
 	columnIndex INT NOT NULL,
 	groupOrder INT NOT NULL,
 	active BIT NOT NULL, -- actif/inactif
 	cssClass VARCHAR(MAX),
-	columnIndex INT NOT NULL,
-	groupOrder INT NOT NULL,
-	active BIT NOT NULL, -- actif/inactif
 	behavior INT NOT NULL, -- Label visible, bloc titre visible,type de groupe...
+	CONSTRAINT PK_FormGroup PRIMARY KEY CLUSTERED (ID)
 )
+
+ALTER TABLE FormGroup  WITH CHECK ADD  CONSTRAINT fk_FormGroup_formConfigId FOREIGN KEY(formConfigId)
+REFERENCES FormConfig (id)
 
 
 create table FormField (
 	id BIGINT IDENTITY(1,1) NOT NULL,
-	groupId BIGINT NOT NULL,
-	demandTypeId BIGINT NOT NULL,
+	formGroupId BIGINT NOT NULL,
 	fieldName VARCHAR(50) NOT NULL,
 	fieldType VARCHAR(50) NOT NULL,
 	fieldLabel VARCHAR(50) NOT NULL,
@@ -217,8 +227,15 @@ create table FormField (
 	tooltip VARCHAR(50) NOT NULL, --équivalent title html
 	defaultValue VARCHAR(50) NOT NULL,
 	active BIT NOT NULL, -- actif/inactif
-	workflowState BIGINT NULL,
+	workflowStateId BIGINT NULL,
 	cssClass VARCHAR(MAX),
-	behavior INT NOT NULL -- Label visible, ...
+	behavior INT NOT NULL, -- Label visible, ...
+	CONSTRAINT PK_FormField PRIMARY KEY CLUSTERED (ID)
 )
 
+
+ALTER TABLE FormField  WITH CHECK ADD  CONSTRAINT fk_FormField_formGroupId FOREIGN KEY(formGroupId)
+REFERENCES FormGroup (id)
+
+ALTER TABLE FormField  WITH CHECK ADD  CONSTRAINT fk_FormField_workflowStateId FOREIGN KEY(workflowStateId)
+REFERENCES WorkflowState (id)

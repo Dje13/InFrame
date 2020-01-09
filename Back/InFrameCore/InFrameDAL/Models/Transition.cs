@@ -17,7 +17,7 @@ namespace InFrameDAL.Models
         public string TransitionShortName { get; set; }
         public string Description { get; set; }
         public string Icon { get; set; }
-        public int WorkflowState { get; set; }
+        public int Active { get; set; }
         public long EndStateId { get; set; }
         public string Actions { get; set; }
         public int? Behavior { get; set; }

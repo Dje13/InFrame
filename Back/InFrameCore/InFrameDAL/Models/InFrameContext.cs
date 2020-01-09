@@ -19,7 +19,7 @@ namespace InFrameDAL.Models
         public virtual DbSet<DemandDynProp> DemandDynProp { get; set; }
         public virtual DbSet<DemandType> DemandType { get; set; }
         public virtual DbSet<DemandTypeDemandDynProp> DemandTypeDemandDynProp { get; set; }
-        public virtual DbSet<Form> Form { get; set; }
+        public virtual DbSet<FormConfig> FormConfig { get; set; }
         public virtual DbSet<FormField> FormField { get; set; }
         public virtual DbSet<FormGroup> FormGroup { get; set; }
         public virtual DbSet<Transition> Transition { get; set; }
@@ -61,6 +61,8 @@ namespace InFrameDAL.Models
 
                 entity.Property(e => e.WorkFlowId).HasColumnName("workFlowId");
 
+                entity.Property(e => e.WorkflowStateId).HasColumnName("workflowStateId");
+
                 entity.HasOne(d => d.DemandType)
                     .WithMany(p => p.Demand)
                     .HasForeignKey(d => d.DemandTypeid)
@@ -72,11 +74,18 @@ namespace InFrameDAL.Models
                     .HasForeignKey(d => d.WorkFlowId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Demand_workflowId");
+
+                entity.HasOne(d => d.WorkflowState)
+                    .WithMany(p => p.Demand)
+                    .HasForeignKey(d => d.WorkflowStateId)
+                    .HasConstraintName("fk_Demand_workflowStateId");
             });
 
             modelBuilder.Entity<DemandDynProp>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Active).HasColumnName("active");
 
                 entity.Property(e => e.DemandDynPropName)
                     .IsRequired()
@@ -89,13 +98,13 @@ namespace InFrameDAL.Models
                     .HasColumnName("demandType")
                     .HasMaxLength(255)
                     .IsUnicode(false);
-
-                entity.Property(e => e.WorkflowState).HasColumnName("workflowState");
             });
 
             modelBuilder.Entity<DemandType>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Active).HasColumnName("active");
 
                 entity.Property(e => e.DemandTypeDescription)
                     .HasColumnName("demandTypeDescription")
@@ -127,8 +136,6 @@ namespace InFrameDAL.Models
 
                 entity.Property(e => e.WorkflowId).HasColumnName("workflowId");
 
-                entity.Property(e => e.WorkflowState).HasColumnName("workflowState");
-
                 entity.HasOne(d => d.Workflow)
                     .WithMany(p => p.DemandType)
                     .HasForeignKey(d => d.WorkflowId)
@@ -142,11 +149,11 @@ namespace InFrameDAL.Models
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
+                entity.Property(e => e.Active).HasColumnName("active");
+
                 entity.Property(e => e.DemandDynPropId).HasColumnName("demandDynPropId");
 
                 entity.Property(e => e.DemandTypeId).HasColumnName("demandTypeId");
-
-                entity.Property(e => e.WorkflowState).HasColumnName("workflowState");
 
                 entity.HasOne(d => d.DemandDynProp)
                     .WithMany(p => p.DemandTypeDemandDynProp)
@@ -161,9 +168,9 @@ namespace InFrameDAL.Models
                     .HasConstraintName("fk_DemandType_DemandDynProp_demandTypeId");
             });
 
-            modelBuilder.Entity<Form>(entity =>
+            modelBuilder.Entity<FormConfig>(entity =>
             {
-                entity.HasNoKey();
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Active).HasColumnName("active");
 
@@ -171,32 +178,47 @@ namespace InFrameDAL.Models
 
                 entity.Property(e => e.ColumnNumber).HasColumnName("columnNumber");
 
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedOnAdd();
+                entity.Property(e => e.CssClass)
+                    .HasColumnName("cssClass")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DemandTypeId).HasColumnName("demandTypeId");
 
                 entity.Property(e => e.Title)
                     .IsRequired()
                     .HasColumnName("title")
                     .HasMaxLength(50)
                     .IsUnicode(false);
+
+                entity.Property(e => e.ValidationMessage)
+                    .HasColumnName("validationMessage")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.DemandType)
+                    .WithMany(p => p.FormConfig)
+                    .HasForeignKey(d => d.DemandTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_FormConfig_demandTypeId");
             });
 
             modelBuilder.Entity<FormField>(entity =>
             {
-                entity.HasNoKey();
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Active).HasColumnName("active");
 
                 entity.Property(e => e.Behavior).HasColumnName("behavior");
+
+                entity.Property(e => e.CssClass)
+                    .HasColumnName("cssClass")
+                    .IsUnicode(false);
 
                 entity.Property(e => e.DefaultValue)
                     .IsRequired()
                     .HasColumnName("defaultValue")
                     .HasMaxLength(50)
                     .IsUnicode(false);
-
-                entity.Property(e => e.DemandTypeId).HasColumnName("demandTypeId");
 
                 entity.Property(e => e.FieldLabel)
                     .IsRequired()
@@ -223,11 +245,7 @@ namespace InFrameDAL.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.GroupId).HasColumnName("groupId");
-
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedOnAdd();
+                entity.Property(e => e.FormGroupId).HasColumnName("formGroupId");
 
                 entity.Property(e => e.IsDynamic).HasColumnName("isDynamic");
 
@@ -237,12 +255,23 @@ namespace InFrameDAL.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.WorkflowState).HasColumnName("workflowState");
+                entity.Property(e => e.WorkflowStateId).HasColumnName("workflowStateId");
+
+                entity.HasOne(d => d.FormGroup)
+                    .WithMany(p => p.FormField)
+                    .HasForeignKey(d => d.FormGroupId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_FormField_formGroupId");
+
+                entity.HasOne(d => d.WorkflowState)
+                    .WithMany(p => p.FormField)
+                    .HasForeignKey(d => d.WorkflowStateId)
+                    .HasConstraintName("fk_FormField_workflowStateId");
             });
 
             modelBuilder.Entity<FormGroup>(entity =>
             {
-                entity.HasNoKey();
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Active).HasColumnName("active");
 
@@ -250,13 +279,24 @@ namespace InFrameDAL.Models
 
                 entity.Property(e => e.ColumnIndex).HasColumnName("columnIndex");
 
-                entity.Property(e => e.FormId).HasColumnName("formId");
+                entity.Property(e => e.CssClass)
+                    .HasColumnName("cssClass")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FormConfigId).HasColumnName("formConfigId");
+
+                entity.Property(e => e.GroupLabel)
+                    .HasColumnName("groupLabel")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.GroupOrder).HasColumnName("groupOrder");
 
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedOnAdd();
+                entity.HasOne(d => d.FormConfig)
+                    .WithMany(p => p.FormGroup)
+                    .HasForeignKey(d => d.FormConfigId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_FormGroup_formConfigId");
             });
 
             modelBuilder.Entity<Transition>(entity =>
@@ -267,6 +307,8 @@ namespace InFrameDAL.Models
                     .HasColumnName("actions")
                     .HasMaxLength(4000)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Active).HasColumnName("active");
 
                 entity.Property(e => e.AffichagePriority).HasColumnName("affichagePriority");
 
@@ -301,8 +343,6 @@ namespace InFrameDAL.Models
                     .HasColumnName("transitionShortName")
                     .HasMaxLength(10)
                     .IsUnicode(false);
-
-                entity.Property(e => e.WorkflowState).HasColumnName("workflowState");
 
                 entity.HasOne(d => d.EndState)
                     .WithMany(p => p.Transition)
@@ -450,11 +490,11 @@ namespace InFrameDAL.Models
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
+                entity.Property(e => e.Active).HasColumnName("active");
+
                 entity.Property(e => e.TransitionId).HasColumnName("transitionId");
 
                 entity.Property(e => e.WorkflowId).HasColumnName("workflowId");
-
-                entity.Property(e => e.WorkflowState).HasColumnName("workflowState");
 
                 entity.HasOne(d => d.Transition)
                     .WithMany(p => p.WorkFlowTransition)
@@ -472,6 +512,8 @@ namespace InFrameDAL.Models
             modelBuilder.Entity<WorkflowState>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Active).HasColumnName("active");
 
                 entity.Property(e => e.Icon)
                     .HasColumnName("icon")
@@ -494,8 +536,6 @@ namespace InFrameDAL.Models
                     .HasColumnName("stateShortName")
                     .HasMaxLength(10)
                     .IsUnicode(false);
-
-                entity.Property(e => e.WorkflowState1).HasColumnName("workflowState");
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -9,6 +9,7 @@ namespace InFrameDAL.Models
         {
             Demand = new HashSet<Demand>();
             DemandTypeDemandDynProp = new HashSet<DemandTypeDemandDynProp>();
+            FormConfig = new HashSet<FormConfig>();
         }
 
         public long Id { get; set; }
@@ -17,11 +18,12 @@ namespace InFrameDAL.Models
         public string DemandTypeShortName { get; set; }
         public string DemandTypeDescription { get; set; }
         public string Icon { get; set; }
-        public int WorkflowState { get; set; }
+        public int Active { get; set; }
         public long WorkflowId { get; set; }
 
         public virtual WorkFlow Workflow { get; set; }
         public virtual ICollection<Demand> Demand { get; set; }
         public virtual ICollection<DemandTypeDemandDynProp> DemandTypeDemandDynProp { get; set; }
+        public virtual ICollection<FormConfig> FormConfig { get; set; }
     }
 }
