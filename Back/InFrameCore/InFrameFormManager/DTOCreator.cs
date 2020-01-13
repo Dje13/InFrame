@@ -8,10 +8,18 @@ using Newtonsoft.Json;
 
 namespace InFrameFormManager
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class DTOCreator
     {
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="myConfig"></param>
+        /// <param name="WorkflowStateId"></param>
+        /// <returns></returns>
         public static FormConfigDTO GetFormConfigDTO(IFormConfig myConfig, long WorkflowStateId)
         {
             FormConfigDTO result = new FormConfigDTO();
@@ -25,7 +33,12 @@ namespace InFrameFormManager
             return result;
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="myGroup"></param>
+        /// <param name="WorkflowStateId"></param>
+        /// <returns></returns>
         public static FormGroupDTO GetFormGroupDTO(IFormGroup myGroup, long WorkflowStateId)
         {
             FormGroupDTO result = new FormGroupDTO();

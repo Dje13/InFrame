@@ -4,6 +4,9 @@ using System.Text;
 
 namespace InFrameFormManager.DTO
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class FormConfigDTO
     {
         public long Id { get; set; }
