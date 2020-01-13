@@ -13,7 +13,7 @@ namespace InFrameDAL
             using (InFrameContext db = new InFrameContext())
             {
                 Result = db.FormConfig.Include("FormGroup").Include("FormGroup.FormField")
-                    .Where(s => s.Id == id).FirstOrDefault();
+                    .Where(s => s.Id == id && s.Active).FirstOrDefault();
             }
             return Result;
         }
@@ -24,7 +24,7 @@ namespace InFrameDAL
             using (InFrameContext db = new InFrameContext())
             {
                 Result = db.FormConfig.Include("FormGroup").Include("FormGroup.FormField")
-                    .Where(s => s.DemandTypeId == id).FirstOrDefault();
+                    .Where(s => s.DemandTypeId == id && s.Active).FirstOrDefault();
             }
             return Result;
         }

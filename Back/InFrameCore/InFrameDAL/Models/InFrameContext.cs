@@ -17,6 +17,8 @@ namespace InFrameDAL.Models
 
         public virtual DbSet<Demand> Demand { get; set; }
         public virtual DbSet<DemandDynProp> DemandDynProp { get; set; }
+        public virtual DbSet<DemandDynPropValue> DemandDynPropValue { get; set; }
+        public virtual DbSet<DemandDynPropValueHisto> DemandDynPropValueHisto { get; set; }
         public virtual DbSet<DemandType> DemandType { get; set; }
         public virtual DbSet<DemandTypeDemandDynProp> DemandTypeDemandDynProp { get; set; }
         public virtual DbSet<FormConfig> FormConfig { get; set; }
@@ -24,8 +26,6 @@ namespace InFrameDAL.Models
         public virtual DbSet<FormGroup> FormGroup { get; set; }
         public virtual DbSet<Transition> Transition { get; set; }
         public virtual DbSet<TransitionStartState> TransitionStartState { get; set; }
-        public virtual DbSet<ValueDemandDynProp> ValueDemandDynProp { get; set; }
-        public virtual DbSet<ValueDemandDynPropHisto> ValueDemandDynPropHisto { get; set; }
         public virtual DbSet<WorkFlow> WorkFlow { get; set; }
         public virtual DbSet<WorkFlowTransition> WorkFlowTransition { get; set; }
         public virtual DbSet<WorkflowState> WorkflowState { get; set; }
@@ -98,6 +98,88 @@ namespace InFrameDAL.Models
                     .HasColumnName("demandType")
                     .HasMaxLength(255)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<DemandDynPropValue>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.ChangeDate)
+                    .HasColumnName("changeDate")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.DateValue)
+                    .HasColumnName("dateValue")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.DecimalValue)
+                    .HasColumnName("decimalValue")
+                    .HasColumnType("decimal(30, 10)");
+
+                entity.Property(e => e.DemandDynPropId).HasColumnName("demandDynPropId");
+
+                entity.Property(e => e.DemandId).HasColumnName("demandId");
+
+                entity.Property(e => e.IntValue).HasColumnName("intValue");
+
+                entity.Property(e => e.RealValue).HasColumnName("realValue");
+
+                entity.Property(e => e.StringValue)
+                    .HasColumnName("stringValue")
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.DemandDynProp)
+                    .WithMany(p => p.DemandDynPropValue)
+                    .HasForeignKey(d => d.DemandDynPropId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_DemandDynPropValue_demandDynPropId");
+
+                entity.HasOne(d => d.Demand)
+                    .WithMany(p => p.DemandDynPropValue)
+                    .HasForeignKey(d => d.DemandId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_DemandDynPropValue_demandId");
+            });
+
+            modelBuilder.Entity<DemandDynPropValueHisto>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.ChangeDate)
+                    .HasColumnName("changeDate")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.DateValue)
+                    .HasColumnName("dateValue")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.DecimalValue)
+                    .HasColumnName("decimalValue")
+                    .HasColumnType("decimal(30, 10)");
+
+                entity.Property(e => e.DemandDynPropId).HasColumnName("demandDynPropId");
+
+                entity.Property(e => e.DemandId).HasColumnName("demandId");
+
+                entity.Property(e => e.IntValue).HasColumnName("intValue");
+
+                entity.Property(e => e.RealValue).HasColumnName("realValue");
+
+                entity.Property(e => e.StringValue)
+                    .HasColumnName("stringValue")
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.DemandDynProp)
+                    .WithMany(p => p.DemandDynPropValueHisto)
+                    .HasForeignKey(d => d.DemandDynPropId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_DemandDynPropValueHisto_demandDynPropId");
+
+                entity.HasOne(d => d.Demand)
+                    .WithMany(p => p.DemandDynPropValueHisto)
+                    .HasForeignKey(d => d.DemandId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_DemandDynPropValueHisto_demandId");
             });
 
             modelBuilder.Entity<DemandType>(entity =>
@@ -371,88 +453,6 @@ namespace InFrameDAL.Models
                     .HasForeignKey(d => d.TransitionId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_TransitionStartState_transitionId");
-            });
-
-            modelBuilder.Entity<ValueDemandDynProp>(entity =>
-            {
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.ChangeDate)
-                    .HasColumnName("changeDate")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.DateValue)
-                    .HasColumnName("dateValue")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.DecimalValue)
-                    .HasColumnName("decimalValue")
-                    .HasColumnType("decimal(30, 10)");
-
-                entity.Property(e => e.DemandDynPropId).HasColumnName("demandDynPropId");
-
-                entity.Property(e => e.DemandId).HasColumnName("demandId");
-
-                entity.Property(e => e.IntValue).HasColumnName("intValue");
-
-                entity.Property(e => e.RealValue).HasColumnName("realValue");
-
-                entity.Property(e => e.StringValue)
-                    .HasColumnName("stringValue")
-                    .IsUnicode(false);
-
-                entity.HasOne(d => d.DemandDynProp)
-                    .WithMany(p => p.ValueDemandDynProp)
-                    .HasForeignKey(d => d.DemandDynPropId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_ValueDemandDynProp_demandDynPropId");
-
-                entity.HasOne(d => d.Demand)
-                    .WithMany(p => p.ValueDemandDynProp)
-                    .HasForeignKey(d => d.DemandId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_ValueDemandDynProp_demandId");
-            });
-
-            modelBuilder.Entity<ValueDemandDynPropHisto>(entity =>
-            {
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.ChangeDate)
-                    .HasColumnName("changeDate")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.DateValue)
-                    .HasColumnName("dateValue")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.DecimalValue)
-                    .HasColumnName("decimalValue")
-                    .HasColumnType("decimal(30, 10)");
-
-                entity.Property(e => e.DemandDynPropId).HasColumnName("demandDynPropId");
-
-                entity.Property(e => e.DemandId).HasColumnName("demandId");
-
-                entity.Property(e => e.IntValue).HasColumnName("intValue");
-
-                entity.Property(e => e.RealValue).HasColumnName("realValue");
-
-                entity.Property(e => e.StringValue)
-                    .HasColumnName("stringValue")
-                    .IsUnicode(false);
-
-                entity.HasOne(d => d.DemandDynProp)
-                    .WithMany(p => p.ValueDemandDynPropHisto)
-                    .HasForeignKey(d => d.DemandDynPropId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_ValueDemandDynPropHisto_demandDynPropId");
-
-                entity.HasOne(d => d.Demand)
-                    .WithMany(p => p.ValueDemandDynPropHisto)
-                    .HasForeignKey(d => d.DemandId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_ValueDemandDynPropHisto_demandId");
             });
 
             modelBuilder.Entity<WorkFlow>(entity =>

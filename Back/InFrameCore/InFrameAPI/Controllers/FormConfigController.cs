@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web.Http.Description;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using InFrameDAL;
@@ -12,6 +12,8 @@ using InFrameDAL.Models;
 using InFrameTools;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 using InFrameFormManager;
+using System.Web.Http.Description;
+using System.Web.Http;
 
 namespace InFrameAPI.Controllers
 {
@@ -20,19 +22,20 @@ namespace InFrameAPI.Controllers
     public class FormConfigController : ControllerBase
     {
         // Get one generic request by ID
-        [HttpGet("{id}")]
+        [Microsoft.AspNetCore.Mvc.HttpGet("{id}")]
         [ResponseType(typeof(FormConfigDTO))]
-        public ActionResult GetFormConfig(long id)
+        public ActionResult GetFormConfig(long id, [FromUri] long workFlowStateId = -1)
         {
             FormConfig myConfig = DataFactory.GetFormConfigById(id);
-            return getFormConfigDTO(DataFactory.GetFormConfigByDemandType(id),-1);
+            return this.getFormConfigDTO(myConfig, workFlowStateId);
         }
 
-        [HttpGet("DemandType/{id}")]
+        [Microsoft.AspNetCore.Mvc.HttpGet("DemandType/{id}")]
         [ResponseType(typeof(FormConfigDTO))]
-        public ActionResult GetFormConfigFromFormType(long id)
+        public ActionResult GetFormConfigFromFormType(long id, [FromUri] long workFlowStateId = -1)
         {
-            return getFormConfigDTO(DataFactory.GetFormConfigByDemandType(id),-1);
+            FormConfig myConfig = DataFactory.GetFormConfigByDemandType(id);
+            return this.getFormConfigDTO(myConfig, workFlowStateId);
         }
 
         protected ActionResult getFormConfigDTO(FormConfig myConfig,  long WorkflowStateId)

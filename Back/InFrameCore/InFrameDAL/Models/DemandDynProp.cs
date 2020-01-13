@@ -7,9 +7,9 @@ namespace InFrameDAL.Models
     {
         public DemandDynProp()
         {
+            DemandDynPropValue = new HashSet<DemandDynPropValue>();
+            DemandDynPropValueHisto = new HashSet<DemandDynPropValueHisto>();
             DemandTypeDemandDynProp = new HashSet<DemandTypeDemandDynProp>();
-            ValueDemandDynProp = new HashSet<ValueDemandDynProp>();
-            ValueDemandDynPropHisto = new HashSet<ValueDemandDynPropHisto>();
         }
 
         public long Id { get; set; }
@@ -17,8 +17,8 @@ namespace InFrameDAL.Models
         public string DemandType { get; set; }
         public int Active { get; set; }
 
+        public virtual ICollection<DemandDynPropValue> DemandDynPropValue { get; set; }
+        public virtual ICollection<DemandDynPropValueHisto> DemandDynPropValueHisto { get; set; }
         public virtual ICollection<DemandTypeDemandDynProp> DemandTypeDemandDynProp { get; set; }
-        public virtual ICollection<ValueDemandDynProp> ValueDemandDynProp { get; set; }
-        public virtual ICollection<ValueDemandDynPropHisto> ValueDemandDynPropHisto { get; set; }
     }
 }

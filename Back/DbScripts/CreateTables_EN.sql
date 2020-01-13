@@ -141,7 +141,7 @@ REFERENCES WorkflowState (id)
 
 
 
-CREATE TABLE ValueDemandDynProp (
+CREATE TABLE DemandDynPropValue (
 	id BIGINT IDENTITY(1,1) NOT NULL,
 	demandId BIGINT NOT NULL,
 	demandDynPropId BIGINT NOT NULL,
@@ -155,15 +155,15 @@ CREATE TABLE ValueDemandDynProp (
 	CONSTRAINT PK_ValueDemandDynProp PRIMARY KEY CLUSTERED (Id)
 )
 
-ALTER TABLE ValueDemandDynProp WITH CHECK ADD  CONSTRAINT fk_ValueDemandDynProp_demandId FOREIGN KEY(demandId)
+ALTER TABLE DemandDynPropValue WITH CHECK ADD  CONSTRAINT fk_DemandDynPropValue_demandId FOREIGN KEY(demandId)
 REFERENCES Demand (id)
 
-ALTER TABLE ValueDemandDynProp  WITH CHECK ADD  CONSTRAINT fk_ValueDemandDynProp_demandDynPropId FOREIGN KEY(demandDynPropId)
+ALTER TABLE DemandDynPropValue  WITH CHECK ADD  CONSTRAINT fk_DemandDynPropValue_demandDynPropId FOREIGN KEY(demandDynPropId)
 REFERENCES DemandDynProp (id)
 
 
 
-CREATE TABLE ValueDemandDynPropHisto (
+CREATE TABLE DemandDynPropValueHisto (
 	id BIGINT IDENTITY(1,1) NOT NULL,
 	demandId BIGINT NOT NULL,
 	demandDynPropId BIGINT NOT NULL,
@@ -178,10 +178,10 @@ CREATE TABLE ValueDemandDynPropHisto (
 )
 
 
-ALTER TABLE ValueDemandDynPropHisto  WITH CHECK ADD  CONSTRAINT fk_ValueDemandDynPropHisto_demandId FOREIGN KEY(demandId)
+ALTER TABLE DemandDynPropValueHisto  WITH CHECK ADD  CONSTRAINT fk_DemandDynPropValueHisto_demandId FOREIGN KEY(demandId)
 REFERENCES Demand (id)
 
-ALTER TABLE ValueDemandDynPropHisto  WITH CHECK ADD  CONSTRAINT fk_ValueDemandDynPropHisto_demandDynPropId FOREIGN KEY(demandDynPropId)
+ALTER TABLE DemandDynPropValueHisto  WITH CHECK ADD  CONSTRAINT fk_DemandDynPropValueHisto_demandDynPropId FOREIGN KEY(demandDynPropId)
 REFERENCES DemandDynProp (id)
 
 create table FormConfig (

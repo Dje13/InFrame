@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace InFrameDAL.Models
 {
-    public partial class ValueDemandDynProp
+    public partial class DemandDynPropValueHisto
     {
         public long Id { get; set; }
         public long DemandId { get; set; }
