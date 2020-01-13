@@ -33,16 +33,7 @@ namespace InFrameTools
                 {
                     DTOProp.SetValue(TargetObject, SourceProps[i].GetValue(SourceObject, null));
                 }
-
             }
-
-
         }
-
-
-
-
-        
-
     }
 }
