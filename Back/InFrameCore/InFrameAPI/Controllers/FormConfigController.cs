@@ -27,14 +27,15 @@ namespace InFrameAPI.Controllers
         public ActionResult GetFormConfig(long id, [FromUri] long workFlowStateId = -1)
         {
             FormConfig myConfig = DataFactory.GetFormConfigById(id);
-            return getFormConfigDTO(DataFactory.GetFormConfigByDemandType(id), workFlowStateId);
+            return this.getFormConfigDTO(myConfig, workFlowStateId);
         }
 
         [Microsoft.AspNetCore.Mvc.HttpGet("DemandType/{id}")]
         [ResponseType(typeof(FormConfigDTO))]
         public ActionResult GetFormConfigFromFormType(long id, [FromUri] long workFlowStateId = -1)
         {
-            return getFormConfigDTO(DataFactory.GetFormConfigByDemandType(id), workFlowStateId);
+            FormConfig myConfig = DataFactory.GetFormConfigByDemandType(id);
+            return this.getFormConfigDTO(myConfig, workFlowStateId);
         }
 
         protected ActionResult getFormConfigDTO(FormConfig myConfig,  long WorkflowStateId)

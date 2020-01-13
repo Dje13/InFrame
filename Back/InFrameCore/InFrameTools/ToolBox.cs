@@ -16,6 +16,7 @@ namespace InFrameTools
         /// <param name="SourceObject"></param>
         /// <param name="TargetObject"></param>
         /// <param name="WithId">True :  ID is mapped otherwise ID field is ignored</param>
+        /// <param name="unMappedField"></param>
         public static void MapObject(object SourceObject, object TargetObject, bool WithId = false, List<string> unMappedField = null)
         {
             if (unMappedField == null)
@@ -33,10 +34,7 @@ namespace InFrameTools
                 {
                     DTOProp.SetValue(TargetObject, SourceProps[i].GetValue(SourceObject, null));
                 }
-
             }
-
-
         }
 
 

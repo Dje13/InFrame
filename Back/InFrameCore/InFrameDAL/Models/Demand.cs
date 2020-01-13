@@ -7,8 +7,8 @@ namespace InFrameDAL.Models
     {
         public Demand()
         {
-            ValueDemandDynProp = new HashSet<ValueDemandDynProp>();
-            ValueDemandDynPropHisto = new HashSet<ValueDemandDynPropHisto>();
+            DemandDynPropValue = new HashSet<DemandDynPropValue>();
+            DemandDynPropValueHisto = new HashSet<DemandDynPropValueHisto>();
         }
 
         public long Id { get; set; }
@@ -22,7 +22,7 @@ namespace InFrameDAL.Models
         public virtual DemandType DemandType { get; set; }
         public virtual WorkFlow WorkFlow { get; set; }
         public virtual WorkflowState WorkflowState { get; set; }
-        public virtual ICollection<ValueDemandDynProp> ValueDemandDynProp { get; set; }
-        public virtual ICollection<ValueDemandDynPropHisto> ValueDemandDynPropHisto { get; set; }
+        public virtual ICollection<DemandDynPropValue> DemandDynPropValue { get; set; }
+        public virtual ICollection<DemandDynPropValueHisto> DemandDynPropValueHisto { get; set; }
     }
 }

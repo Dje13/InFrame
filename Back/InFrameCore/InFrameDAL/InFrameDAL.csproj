@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DBScripts\" />
     <Folder Include="DTO\" />
   </ItemGroup>
 
