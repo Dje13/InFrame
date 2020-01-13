@@ -91,3 +91,21 @@ INSERT INTO [dbo].[FormGroup]
 		   ,behavior)
     SELECT id, 'Informations personnelles',1,1,1,'',0
 	from [FormConfig] where [title]='Formulaire de test'
+
+
+INSERT INTO [dbo].[FormField]
+           ([formGroupId]
+           ,[fieldName]
+           ,[fieldType]
+           ,[fieldLabel]
+           ,[isDynamic]
+           ,[fieldParameters]
+           ,[fieldOrder]
+           ,[tooltip]
+           ,[defaultValue]
+           ,[active]
+           ,[workflowStateId]
+           ,[cssClass]
+           ,[behavior])
+SELECT ID,'nom_prenom','inputText','Nom & Prénom',1,'{"required":true}',1,'Champ de saisie nom et prénom','toto',1,NULL,'',0
+FROM [FormGroup] WHERE Title='Informations personnelles'
