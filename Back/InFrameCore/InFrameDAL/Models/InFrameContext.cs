@@ -187,7 +187,7 @@ namespace InFrameDAL.Models
                 entity.Property(e => e.Title)
                     .IsRequired()
                     .HasColumnName("title")
-                    .HasMaxLength(50)
+                    .HasMaxLength(100)
                     .IsUnicode(false);
 
                 entity.Property(e => e.ValidationMessage)
@@ -285,12 +285,13 @@ namespace InFrameDAL.Models
 
                 entity.Property(e => e.FormConfigId).HasColumnName("formConfigId");
 
-                entity.Property(e => e.GroupLabel)
-                    .HasColumnName("groupLabel")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.GroupOrder).HasColumnName("groupOrder");
+
+                entity.Property(e => e.Title)
+                    .IsRequired()
+                    .HasColumnName("title")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
                 entity.HasOne(d => d.FormConfig)
                     .WithMany(p => p.FormGroup)

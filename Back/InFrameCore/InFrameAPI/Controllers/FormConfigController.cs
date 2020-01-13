@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using System.Web.Http.Description;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using InFrameDAL.DTO;
+using InFrameDAL;
+using InFrameFormManager.DTO;
 using InFrameDAL.Models;
 
 using InFrameTools;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
+using InFrameFormManager;
 
 namespace InFrameAPI.Controllers
 {
@@ -22,42 +24,25 @@ namespace InFrameAPI.Controllers
         [ResponseType(typeof(FormConfigDTO))]
         public ActionResult GetFormConfig(long id)
         {
-            FormConfigDTO Resultat = new FormConfigDTO();
-
-            using (InFrameContext db = new InFrameContext())
-            {
-                FormConfig myConfig = db.FormConfig
-                    .Where(s => s.Id == id).FirstOrDefault();
-                if (myConfig == null)
-                {
-                    return NotFound();
-                }
-                ToolBox.MapObject(myConfig, Resultat,true);
-
-            }
-            return Ok(Resultat);
+            FormConfig myConfig = DataFactory.GetFormConfigById(id);
+            return getFormConfigDTO(DataFactory.GetFormConfigByDemandType(id),-1);
         }
 
         [HttpGet("DemandType/{id}")]
         [ResponseType(typeof(FormConfigDTO))]
         public ActionResult GetFormConfigFromFormType(long id)
         {
-            FormConfigDTO Resultat = new FormConfigDTO();
-
-            using (InFrameContext db = new InFrameContext())
-            {
-                FormConfig myConfig = db.FormConfig
-                    .Where(s => s.DemandTypeId == id).FirstOrDefault();
-                if (myConfig == null)
-                {
-                    return NotFound();
-                }
-                ToolBox.MapObject(myConfig, Resultat, true);
-
-            }
-            return Ok(Resultat);
+            return getFormConfigDTO(DataFactory.GetFormConfigByDemandType(id),-1);
         }
 
+        protected ActionResult getFormConfigDTO(FormConfig myConfig,  long WorkflowStateId)
+        {
+            if (myConfig == null)
+            {
+                return NotFound();
+            }
+            return Ok(DTOCreator.GetFormConfigDTO(myConfig,  WorkflowStateId));
+        }
 
     }
 }

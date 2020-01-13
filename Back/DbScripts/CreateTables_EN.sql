@@ -187,7 +187,7 @@ REFERENCES DemandDynProp (id)
 create table FormConfig (
 	id BIGINT IDENTITY(1,1) NOT NULL,
 	demandTypeId BIGINT NOT NULL,
-	title VARCHAR(50) NOT NULL,
+	title VARCHAR(100) NOT NULL,
 	columnNumber INT NOT NULL,
 	active BIT NOT NULL, -- actif/inactif
 	validationMessage VARCHAR(100), -- A RAJOUTER -- message apparaissant à la validation du formulaire (facultatif)
@@ -202,7 +202,7 @@ REFERENCES DemandType (id)
 create table FormGroup (
 	id BIGINT IDENTITY(1,1) NOT NULL,	
 	formConfigId BIGINT NOT NULL,
-	groupLabel VARCHAR(50), -- A RAJOUTER -- titre du groupe (facultatif)
+	title VARCHAR(100) NOT NULL,
 	columnIndex INT NOT NULL,
 	groupOrder INT NOT NULL,
 	active BIT NOT NULL, -- actif/inactif

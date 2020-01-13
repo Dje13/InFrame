@@ -61,7 +61,7 @@ INSERT INTO [dbo].[FormConfig]
            ,[cssClass]
            ,[behavior])
 
-SELECT ID ,' Formulaire de test',2,1,'Ouias ça marche','',0
+SELECT ID ,'Formulaire de test',2,1,'Ouias ça marche','',0
 FROM [DemandType] WHERE [demandTypeInternalName]='TypeTest'
 
 
@@ -75,5 +75,19 @@ INSERT INTO [dbo].[FormConfig]
            ,[cssClass]
            ,[behavior])
 
-SELECT ID ,' Formulaire de test2',2,1,'Ouias ça marche2','',0
+SELECT ID ,'Formulaire de test2',2,1,'Ouias ça marche2','',0
 FROM [DemandType] WHERE [demandTypeInternalName]='TypeTest2'
+
+
+
+
+INSERT INTO [dbo].[FormGroup]
+           ([formConfigId]
+           ,Title
+           ,[columnIndex]
+           ,[groupOrder]
+           ,[active]
+           ,[cssClass]
+		   ,behavior)
+    SELECT id, 'Informations personnelles',1,1,1,'',0
+	from [FormConfig] where [title]='Formulaire de test'
