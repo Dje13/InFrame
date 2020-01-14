@@ -35,7 +35,7 @@ namespace InFrameDAL.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=InFrame;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=InFrame;Trusted_Connection=True;", x => x.UseNetTopologySuite());
             }
         }
 
@@ -57,8 +57,6 @@ namespace InFrameDAL.Models
 
                 entity.Property(e => e.DemandTypeid).HasColumnName("demandTypeid");
 
-                entity.Property(e => e.EtatId).HasColumnName("etatId");
-
                 entity.Property(e => e.WorkFlowId).HasColumnName("workFlowId");
 
                 entity.Property(e => e.WorkflowStateId).HasColumnName("workflowStateId");
@@ -78,6 +76,7 @@ namespace InFrameDAL.Models
                 entity.HasOne(d => d.WorkflowState)
                     .WithMany(p => p.Demand)
                     .HasForeignKey(d => d.WorkflowStateId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Demand_workflowStateId");
             });
 
@@ -93,9 +92,8 @@ namespace InFrameDAL.Models
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
-                entity.Property(e => e.DemandType)
+                entity.Property(e => e.DynPropType)
                     .IsRequired()
-                    .HasColumnName("demandType")
                     .HasMaxLength(255)
                     .IsUnicode(false);
             });
@@ -119,6 +117,10 @@ namespace InFrameDAL.Models
                 entity.Property(e => e.DemandDynPropId).HasColumnName("demandDynPropId");
 
                 entity.Property(e => e.DemandId).HasColumnName("demandId");
+
+                entity.Property(e => e.GeomValue)
+                    .HasColumnName("geomValue")
+                    .HasColumnType("geometry");
 
                 entity.Property(e => e.IntValue).HasColumnName("intValue");
 
@@ -160,6 +162,10 @@ namespace InFrameDAL.Models
                 entity.Property(e => e.DemandDynPropId).HasColumnName("demandDynPropId");
 
                 entity.Property(e => e.DemandId).HasColumnName("demandId");
+
+                entity.Property(e => e.GeomValue)
+                    .HasColumnName("geomValue")
+                    .HasColumnType("geometry");
 
                 entity.Property(e => e.IntValue).HasColumnName("intValue");
 

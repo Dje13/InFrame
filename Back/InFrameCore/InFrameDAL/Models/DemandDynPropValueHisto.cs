@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using NetTopologySuite.Geometries;
 
 namespace InFrameDAL.Models
 {
@@ -14,6 +15,7 @@ namespace InFrameDAL.Models
         public DateTime? DateValue { get; set; }
         public double? RealValue { get; set; }
         public decimal? DecimalValue { get; set; }
+        public Geometry GeomValue { get; set; }
 
         public virtual Demand Demand { get; set; }
         public virtual DemandDynProp DemandDynProp { get; set; }

@@ -97,7 +97,7 @@ REFERENCES Workflow (id)
 CREATE TABLE DemandDynProp (
 	id BIGINT IDENTITY(1,1) NOT NULL,
 	demandDynPropName VARCHAR(255) NOT NULL,
-	demandType VARCHAR(255) NOT NULL, /* string, date, entier, float, decimal, list, coordonnées spatiale */ -- anciennement nature 
+	DynPropType VARCHAR(255) NOT NULL, /* string, date, entier, float, decimal, list, coordonnées spatiale */ -- anciennement nature 
 	active INT NOT NULL,
 	CONSTRAINT PK_DemandDynProp PRIMARY KEY CLUSTERED (id)
 )
@@ -121,10 +121,9 @@ REFERENCES DemandType (id)
 
 CREATE TABLE Demand (
 	id BIGINT IDENTITY(1,1) NOT NULL,
-	etatId BIGINT NOT NULL,
 	workFlowId BIGINT NOT NULL,
 	demandTypeid BIGINT NOT NULL,
-	workflowStateId BIGINT NULL,
+	workflowStateId BIGINT NOT NULL,
 	author VARCHAR(200) NOT NULL,
 	createDate DATETIME NOT NULL,
 	CONSTRAINT PK_Demand PRIMARY KEY CLUSTERED (ID)

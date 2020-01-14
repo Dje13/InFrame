@@ -12,10 +12,9 @@ namespace InFrameDAL.Models
         }
 
         public long Id { get; set; }
-        public long EtatId { get; set; }
         public long WorkFlowId { get; set; }
         public long DemandTypeid { get; set; }
-        public long? WorkflowStateId { get; set; }
+        public long WorkflowStateId { get; set; }
         public string Author { get; set; }
         public DateTime CreateDate { get; set; }
 
