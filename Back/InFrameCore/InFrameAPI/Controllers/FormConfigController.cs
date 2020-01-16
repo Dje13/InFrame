@@ -30,7 +30,7 @@ namespace InFrameAPI.Controllers
         [ResponseType(typeof(FormConfigDTO))]
         public ActionResult GetFormConfig(long id, [FromUri] long workFlowStateId = -1)
         {
-            FormConfig myConfig = DataFactory.GetFormConfigById(id);
+            FormConfig myConfig = DataFactory.getFormConfigById(id);
             return this.getFormConfigDTO(myConfig, workFlowStateId);
         }
 
@@ -39,7 +39,9 @@ namespace InFrameAPI.Controllers
         [ResponseType(typeof(FormConfigDTO))]
         public ActionResult GetFormConfigFromFormType(long id, [FromUri] long workFlowStateId = -1)
         {
-            FormConfig myConfig = DataFactory.GetFormConfigByDemandType(id); 
+
+            FormConfig myConfig = DataFactory.getFormConfigByDemandType(id); 
+
             return this.getFormConfigDTO(myConfig, workFlowStateId);
         }
 

@@ -7,7 +7,7 @@ namespace InFrameInterfaces
     public interface IFormConfig
     {
         public long Id { get; set; }
-        public long DemandTypeId { get; set; }
+        public long TypeId { get; set; }
         public string Title { get; set; }
         public int ColumnNumber { get; set; }
         public bool Active { get; set; }
