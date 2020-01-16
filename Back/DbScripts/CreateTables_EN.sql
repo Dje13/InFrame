@@ -145,12 +145,12 @@ CREATE TABLE DemandDynPropValue (
 	demandId BIGINT NOT NULL,
 	dynPropId BIGINT NOT NULL,
 	changeDate DATETIME NOT NULL,
-	stringValue VARCHAR(MAX) NULL,
-	intValue BIGINT NULL,
-	dateValue 	DATETIME NULL,
-	realValue  FLOAT NULL,
-	decimalValue DECIMAL(30,10) NULL,
-	geomValue geometry NULL
+	valueString VARCHAR(MAX) NULL,
+	valueInt BIGINT NULL,
+	valueDate 	DATETIME NULL,
+	valueReal  FLOAT NULL,
+	valueDecimal DECIMAL(30,10) NULL,
+	valueGeom geometry NULL,
 	CONSTRAINT PK_ValueDemandDynProp PRIMARY KEY CLUSTERED (Id)
 )
 
@@ -167,12 +167,12 @@ CREATE TABLE DemandDynPropValueHisto (
 	demandId BIGINT NOT NULL,
 	dynPropId BIGINT NOT NULL,
 	changeDate DATETIME NOT NULL,
-	stringValue VARCHAR(MAX) NULL,
-	intValue BIGINT NULL,
-	dateValue 	DATETIME NULL,
-	realValue  FLOAT NULL,
-	decimalValue DECIMAL(30,10) NULL,
-	geomValue geometry NULL,
+	valueString VARCHAR(MAX) NULL,
+	valueInt BIGINT NULL,
+	valueDate 	DATETIME NULL,
+	valueReal  FLOAT NULL,
+	valueDecimal DECIMAL(30,10) NULL,
+	valueGeom geometry NULL,
 	CONSTRAINT PK_ValueDemandDynPropHisto PRIMARY KEY CLUSTERED (ID)
 )
 
@@ -191,15 +191,15 @@ CREATE TABLE DemandTransitionHisto (
 	transitionId BIGINT NOT NULL,
 	transitionDate DATETIME NOT NULL,
 	Comment VARCHAR(MAX) NULL,
-	CONSTRAINT PK_ValueDemandDynPropHisto PRIMARY KEY CLUSTERED (ID)
+	CONSTRAINT PK_DemandTransitionHisto PRIMARY KEY CLUSTERED (ID)
 )
 
 
-ALTER TABLE DemandDynPropValueHisto  WITH CHECK ADD  CONSTRAINT fk_DemandDynPropValueHisto_demandId FOREIGN KEY(demandId)
+ALTER TABLE DemandTransitionHisto  WITH CHECK ADD  CONSTRAINT fk_DemandTransitionHisto_demandId FOREIGN KEY(demandId)
 REFERENCES Demand (id)
 
-ALTER TABLE DemandDynPropValueHisto  WITH CHECK ADD  CONSTRAINT fk_DemandDynPropValueHisto_dynPropId FOREIGN KEY(dynPropId)
-REFERENCES DemandDynProp (id)
+ALTER TABLE DemandTransitionHisto  WITH CHECK ADD  CONSTRAINT fkDemandTransitionHisto_transitionId FOREIGN KEY(transitionId)
+REFERENCES Transition (id)
 
 
 create table FormConfig (
@@ -242,8 +242,8 @@ create table FormField (
 	isDynamic BIT NOT NULL,
 	fieldParameters VARCHAR(MAX) NOT NULL, --(min, max, size, placeholder, disabled, ...)
 	fieldOrder INT NOT NULL,
-	tooltip VARCHAR(50) NOT NULL, --équivalent title html
-	defaultValue VARCHAR(50) NOT NULL,
+	tooltip VARCHAR(50) NULL, --équivalent title html
+	defaultValue VARCHAR(50) NULL,
 	active BIT NOT NULL, -- actif/inactif
 	workflowStateId BIGINT NULL,
 	cssClass VARCHAR(MAX),

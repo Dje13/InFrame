@@ -9,14 +9,14 @@ namespace InFrameInterfaces.ObjWithDynProp
     {
 
         public long Id { get; set; }
-        
         public DateTime ChangeDate { get; set; }
-        public string StringValue { get; set; }
-        public long? IntValue { get; set; }
-        public DateTime? DateValue { get; set; }
-        public double? RealValue { get; set; }
-        public decimal? DecimalValue { get; set; }
-        public Geometry GeomValue { get; set; }
+        public string ValueString { get; set; }
+        public long? ValueInt { get; set; }
+        public DateTime? ValueDate { get; set; }
+        public double? ValueReal { get; set; }
+        public decimal? ValueDecimal { get; set; }
+        public Geometry ValueGeom { get; set; }
+        public string getValueType();
 
 
     }

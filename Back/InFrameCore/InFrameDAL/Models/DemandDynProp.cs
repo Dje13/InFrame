@@ -13,7 +13,7 @@ namespace InFrameDAL.Models
         }
 
         public long Id { get; set; }
-        public string DemandDynPropName { get; set; }
+        public string DynPropName { get; set; }
         public string DynPropType { get; set; }
         public int Active { get; set; }
 

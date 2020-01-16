@@ -14,7 +14,7 @@ namespace InFrameInterfaces.ObjWithDynProp
 
         public IObjType getType();
 
-        public List<IObjDynPropValue> getValues(); 
+        public Dictionary<string, IObjDynPropValue> getValues(); 
 
         
 

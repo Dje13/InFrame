@@ -24,10 +24,10 @@ WHERE [stateName] ='Création'
 GO
 
 INSERT INTO [dbo].[DemandType]
-           ([demandTypeName]
-           ,[demandTypeInternalName]
-           ,[demandTypeShortName]
-           ,[demandTypeDescription]
+           (typeName
+           ,typeInternalName
+           ,typeShortName
+           ,typeDescription
            ,[icon]
            ,[active]
            ,[workflowId])
@@ -38,10 +38,10 @@ WHERE [workflowName]='Default WorkFLow'
 GO
 
 INSERT INTO [dbo].[DemandType]
-           ([demandTypeName]
-           ,[demandTypeInternalName]
-           ,[demandTypeShortName]
-           ,[demandTypeDescription]
+           (typeName
+           ,typeInternalName
+           ,typeShortName
+           ,typeDescription
            ,[icon]
            ,[active]
            ,[workflowId])
@@ -51,9 +51,9 @@ WHERE [workflowName]='Default WorkFLow'
 
 GO
 
-
+/*
 INSERT INTO [dbo].[FormConfig]
-           ([demandTypeId]
+           ([typeId]
            ,[title]
            ,[columnNumber]
            ,[active]
@@ -62,12 +62,12 @@ INSERT INTO [dbo].[FormConfig]
            ,[behavior])
 
 SELECT ID ,'Formulaire de test',2,1,'Ouias ça marche','',0
-FROM [DemandType] WHERE [demandTypeInternalName]='TypeTest'
+FROM [DemandType] WHERE [typeInternalName]='TypeTest'
 
 
 
 INSERT INTO [dbo].[FormConfig]
-           ([demandTypeId]
+           ([typeId]
            ,[title]
            ,[columnNumber]
            ,[active]
@@ -76,7 +76,7 @@ INSERT INTO [dbo].[FormConfig]
            ,[behavior])
 
 SELECT ID ,'Formulaire de test2',2,1,'Ouias ça marche2','',0
-FROM [DemandType] WHERE [demandTypeInternalName]='TypeTest2'
+FROM [DemandType] WHERE [typeInternalName]='TypeTest2'
 
 
 
@@ -109,3 +109,4 @@ INSERT INTO [dbo].[FormField]
            ,[behavior])
 SELECT ID,'nom_prenom','inputText','Nom & Prénom',1,'{"required":true}',1,'Champ de saisie nom et prénom','toto',1,NULL,'',0
 FROM [FormGroup] WHERE Title='Informations personnelles'
+*/
