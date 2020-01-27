@@ -25,6 +25,14 @@ namespace InFrameDAL.Models
         public virtual DbSet<FormConfig> FormConfig { get; set; }
         public virtual DbSet<FormField> FormField { get; set; }
         public virtual DbSet<FormGroup> FormGroup { get; set; }
+        public virtual DbSet<Modalist> Modalist { get; set; }
+        public virtual DbSet<Ticket> Ticket { get; set; }
+        public virtual DbSet<TicketDynProp> TicketDynProp { get; set; }
+        public virtual DbSet<TicketDynPropValue> TicketDynPropValue { get; set; }
+        public virtual DbSet<TicketDynPropValueHisto> TicketDynPropValueHisto { get; set; }
+        public virtual DbSet<TicketTransitionHisto> TicketTransitionHisto { get; set; }
+        public virtual DbSet<TicketType> TicketType { get; set; }
+        public virtual DbSet<TicketTypeTicketDynProp> TicketTypeTicketDynProp { get; set; }
         public virtual DbSet<Transition> Transition { get; set; }
         public virtual DbSet<TransitionStartState> TransitionStartState { get; set; }
         public virtual DbSet<WorkFlow> WorkFlow { get; set; }
@@ -36,7 +44,7 @@ namespace InFrameDAL.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=InFrame;Trusted_Connection=True;", x => x.UseNetTopologySuite());
+                optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=InFrame;Trusted_Connection=True;", x => x.UseNetTopologySuite());
             }
         }
 
@@ -299,24 +307,22 @@ namespace InFrameDAL.Models
                     .HasColumnName("cssClass")
                     .IsUnicode(false);
 
+                entity.Property(e => e.FormNature)
+                    .IsRequired()
+                    .HasColumnName("formNature")
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Title)
                     .IsRequired()
                     .HasColumnName("title")
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
-                entity.Property(e => e.TypeId).HasColumnName("typeId");
-
                 entity.Property(e => e.ValidationMessage)
                     .HasColumnName("validationMessage")
                     .HasMaxLength(100)
                     .IsUnicode(false);
-
-                entity.HasOne(d => d.Type)
-                    .WithMany(p => p.FormConfig)
-                    .HasForeignKey(d => d.TypeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_FormConfig_demandTypeId");
             });
 
             modelBuilder.Entity<FormField>(entity =>
@@ -332,7 +338,6 @@ namespace InFrameDAL.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.DefaultValue)
-                    .IsRequired()
                     .HasColumnName("defaultValue")
                     .HasMaxLength(50)
                     .IsUnicode(false);
@@ -367,7 +372,6 @@ namespace InFrameDAL.Models
                 entity.Property(e => e.IsDynamic).HasColumnName("isDynamic");
 
                 entity.Property(e => e.Tooltip)
-                    .IsRequired()
                     .HasColumnName("tooltip")
                     .HasMaxLength(50)
                     .IsUnicode(false);
@@ -415,6 +419,281 @@ namespace InFrameDAL.Models
                     .HasForeignKey(d => d.FormConfigId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_FormGroup_formConfigId");
+            });
+
+            modelBuilder.Entity<Modalist>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnName("createDate")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.ModalistAbrev)
+                    .IsRequired()
+                    .HasColumnName("modalistAbrev")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModalistGroup)
+                    .IsRequired()
+                    .HasColumnName("modalistGroup")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModalistLabel)
+                    .IsRequired()
+                    .HasColumnName("modalistLabel")
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModalistOrdreAffichage).HasColumnName("modalistOrdreAffichage");
+
+                entity.Property(e => e.ModalistRang).HasColumnName("modalistRang");
+            });
+
+            modelBuilder.Entity<Ticket>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Author)
+                    .IsRequired()
+                    .HasColumnName("author")
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CloseDate)
+                    .HasColumnName("closeDate")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnName("createDate")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.Criticality).HasColumnName("criticality");
+
+                entity.Property(e => e.Project)
+                    .IsRequired()
+                    .HasColumnName("project")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.TicketContent)
+                    .IsRequired()
+                    .HasColumnName("ticketContent")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.TicketStatus).HasColumnName("ticketStatus");
+
+                entity.Property(e => e.TicketTitle)
+                    .IsRequired()
+                    .HasColumnName("ticketTitle")
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.TypeId).HasColumnName("typeId");
+
+                entity.HasOne(d => d.Type)
+                    .WithMany(p => p.Ticket)
+                    .HasForeignKey(d => d.TypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_Ticket_TicketTypeId");
+            });
+
+            modelBuilder.Entity<TicketDynProp>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Active).HasColumnName("active");
+
+                entity.Property(e => e.DynPropName)
+                    .IsRequired()
+                    .HasColumnName("dynPropName")
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DynPropType)
+                    .IsRequired()
+                    .HasColumnName("dynPropType")
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<TicketDynPropValue>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.ChangeDate)
+                    .HasColumnName("changeDate")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.DynPropId).HasColumnName("dynPropId");
+
+                entity.Property(e => e.TicketId).HasColumnName("ticketId");
+
+                entity.Property(e => e.ValueDate)
+                    .HasColumnName("valueDate")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.ValueDecimal)
+                    .HasColumnName("valueDecimal")
+                    .HasColumnType("decimal(30, 10)");
+
+                entity.Property(e => e.ValueGeom)
+                    .HasColumnName("valueGeom")
+                    .HasColumnType("geometry");
+
+                entity.Property(e => e.ValueInt).HasColumnName("valueInt");
+
+                entity.Property(e => e.ValueReal).HasColumnName("valueReal");
+
+                entity.Property(e => e.ValueString)
+                    .HasColumnName("valueString")
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.DynProp)
+                    .WithMany(p => p.TicketDynPropValue)
+                    .HasForeignKey(d => d.DynPropId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_TicketDynPropValue_dynPropId");
+
+                entity.HasOne(d => d.Ticket)
+                    .WithMany(p => p.TicketDynPropValue)
+                    .HasForeignKey(d => d.TicketId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_TicketDynPropValue_TicketId");
+            });
+
+            modelBuilder.Entity<TicketDynPropValueHisto>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.ChangeDate)
+                    .HasColumnName("changeDate")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.DynPropId).HasColumnName("dynPropId");
+
+                entity.Property(e => e.TicketId).HasColumnName("ticketId");
+
+                entity.Property(e => e.ValueDate)
+                    .HasColumnName("valueDate")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.ValueDecimal)
+                    .HasColumnName("valueDecimal")
+                    .HasColumnType("decimal(30, 10)");
+
+                entity.Property(e => e.ValueGeom)
+                    .HasColumnName("valueGeom")
+                    .HasColumnType("geometry");
+
+                entity.Property(e => e.ValueInt).HasColumnName("valueInt");
+
+                entity.Property(e => e.ValueReal).HasColumnName("valueReal");
+
+                entity.Property(e => e.ValueString)
+                    .HasColumnName("valueString")
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.DynProp)
+                    .WithMany(p => p.TicketDynPropValueHisto)
+                    .HasForeignKey(d => d.DynPropId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_TicketDynPropValueHisto_dynPropId");
+
+                entity.HasOne(d => d.Ticket)
+                    .WithMany(p => p.TicketDynPropValueHisto)
+                    .HasForeignKey(d => d.TicketId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_TicketDynPropValueHisto_TicketId");
+            });
+
+            modelBuilder.Entity<TicketTransitionHisto>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Comment).IsUnicode(false);
+
+                entity.Property(e => e.TicketId).HasColumnName("ticketId");
+
+                entity.Property(e => e.TransitionDate)
+                    .HasColumnName("transitionDate")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.TransitionId).HasColumnName("transitionId");
+
+                entity.HasOne(d => d.Ticket)
+                    .WithMany(p => p.TicketTransitionHisto)
+                    .HasForeignKey(d => d.TicketId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_TicketTransitionHisto_TicketId");
+
+                entity.HasOne(d => d.Transition)
+                    .WithMany(p => p.TicketTransitionHisto)
+                    .HasForeignKey(d => d.TransitionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fkTicketTransitionHisto_transitionId");
+            });
+
+            modelBuilder.Entity<TicketType>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Active).HasColumnName("active");
+
+                entity.Property(e => e.Icon)
+                    .HasColumnName("icon")
+                    .HasMaxLength(400)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.TypeDescription)
+                    .HasColumnName("typeDescription")
+                    .HasMaxLength(4000)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.TypeInternalName)
+                    .IsRequired()
+                    .HasColumnName("typeInternalName")
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.TypeName)
+                    .IsRequired()
+                    .HasColumnName("typeName")
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.TypeShortName)
+                    .IsRequired()
+                    .HasColumnName("typeShortName")
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<TicketTypeTicketDynProp>(entity =>
+            {
+                entity.ToTable("TicketType_TicketDynProp");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Active).HasColumnName("active");
+
+                entity.Property(e => e.DynPropId).HasColumnName("dynPropId");
+
+                entity.Property(e => e.TypeId).HasColumnName("typeId");
+
+                entity.HasOne(d => d.DynProp)
+                    .WithMany(p => p.TicketTypeTicketDynProp)
+                    .HasForeignKey(d => d.DynPropId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_TicketType_TicketDynProp_dynPropId");
+
+                entity.HasOne(d => d.Type)
+                    .WithMany(p => p.TicketTypeTicketDynProp)
+                    .HasForeignKey(d => d.TypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_TicketType_TicketDynProp_typeId");
             });
 
             modelBuilder.Entity<Transition>(entity =>

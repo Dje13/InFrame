@@ -5,6 +5,7 @@ using InFrameFormManager.DTO;
 using InFrameInterfaces;
 using InFrameTools;
 using Newtonsoft.Json;
+using InFrameInterfaces.Ticket;
 
 namespace InFrameFormManager
 {
@@ -32,6 +33,40 @@ namespace InFrameFormManager
             }
             return result;
         }
+
+
+        public static List<FormConfigDTO> GetFormConfigListDTO(IEnumerable<IFormConfig> listForm)
+        {
+            List<FormConfigDTO> result = new List<FormConfigDTO>();
+
+            foreach (IFormConfig formulaire in listForm)
+            {
+                FormConfigDTO resultTemp = new FormConfigDTO();
+
+                ToolBox.MapObject(formulaire, resultTemp, true);
+                resultTemp.formGroups = null;
+
+                result.Add(resultTemp);
+            }
+        
+            return result;
+        }
+
+        //public static List<ITicket> GetTicketListDTO(IEnumerable<ITicket> listTickets)
+        //{
+        //    List<ITicket> result = new List<ITicket>();
+
+        //    foreach (ITicket ticket in listTickets)
+        //    {
+        //        ITicket resultTemp = new ITicket();
+
+        //        ToolBox.MapObject(ticket, resultTemp, true);
+
+        //        result.Add(resultTemp);
+        //    }
+
+        //    return result;
+        //}
 
         /// <summary>
         /// 

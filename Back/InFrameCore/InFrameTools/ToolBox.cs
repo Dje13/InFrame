@@ -36,11 +36,5 @@ namespace InFrameTools
                 }
             }
         }
-
-
-
-
-        
-
     }
 }

@@ -16,6 +16,7 @@ namespace InFrameAPI
 {
     public class Startup
     {
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -27,7 +28,7 @@ namespace InFrameAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-           
+
 
         }
 
@@ -39,12 +40,13 @@ namespace InFrameAPI
                 app.UseDeveloperExceptionPage();
             }
 
+            
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
             app.UseAuthorization();
-
 
             app.UseCors(builder =>
             {
@@ -55,6 +57,8 @@ namespace InFrameAPI
             {
                 endpoints.MapControllers();
             });
+
+
         }
     }
 }

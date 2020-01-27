@@ -8,6 +8,7 @@ namespace InFrameDAL.Models
         public Transition()
         {
             DemandTransitionHisto = new HashSet<DemandTransitionHisto>();
+            TicketTransitionHisto = new HashSet<TicketTransitionHisto>();
             TransitionStartState = new HashSet<TransitionStartState>();
             WorkFlowTransition = new HashSet<WorkFlowTransition>();
         }
@@ -26,6 +27,7 @@ namespace InFrameDAL.Models
 
         public virtual WorkflowState EndState { get; set; }
         public virtual ICollection<DemandTransitionHisto> DemandTransitionHisto { get; set; }
+        public virtual ICollection<TicketTransitionHisto> TicketTransitionHisto { get; set; }
         public virtual ICollection<TransitionStartState> TransitionStartState { get; set; }
         public virtual ICollection<WorkFlowTransition> WorkFlowTransition { get; set; }
     }

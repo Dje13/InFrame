@@ -147,8 +147,8 @@ CREATE TABLE DemandDynPropValue (
 	changeDate DATETIME NOT NULL,
 	valueString VARCHAR(MAX) NULL,
 	valueInt BIGINT NULL,
-	valueDate 	DATETIME NULL,
-	valueReal  FLOAT NULL,
+	valueDate DATETIME NULL,
+	valueReal FLOAT NULL,
 	valueDecimal DECIMAL(30,10) NULL,
 	valueGeom geometry NULL,
 	CONSTRAINT PK_ValueDemandDynProp PRIMARY KEY CLUSTERED (Id)
