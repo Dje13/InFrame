@@ -16,5 +16,5 @@ namespace InFrameDAL.DTO
 
         public Dictionary<string,object> dynPropValues { get; set; }
 
-}
+    }
 }

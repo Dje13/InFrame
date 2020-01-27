@@ -15,6 +15,7 @@ using InFrameFormManager;
 using System.Web.Http.Description;
 using System.Web.Http;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace InFrameAPI.Controllers
 {
@@ -52,6 +53,32 @@ namespace InFrameAPI.Controllers
                 return NotFound();
             }
             return Ok(DTOCreator.GetFormConfigDTO(myConfig,  WorkflowStateId));
+        }
+
+        [Microsoft.AspNetCore.Mvc.HttpGet("List")]
+        [ResponseType(typeof(List<FormConfigDTO>))]
+        public ActionResult GetFormConfigList()
+        {
+            List<FormConfig> listForm = DataFactory.getFormConfigList();
+            return this.getFormConfigListDTO(listForm);
+        }
+
+        protected ActionResult getFormConfigListDTO(List<FormConfig> myConfig)
+        {
+            if (myConfig == null)
+            {
+                return NotFound();
+            }
+            
+            return Ok(DTOCreator.GetFormConfigListDTO(myConfig));
+        }
+
+        [Microsoft.AspNetCore.Mvc.HttpGet("FormTypes")]
+        [ResponseType(typeof(List<string>))]
+        public List<string> GetFormTypes()
+        {
+            List<string> formTypes = DataFactory.getFormTypes();
+            return formTypes;
         }
 
     }
