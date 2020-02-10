@@ -28,58 +28,57 @@ namespace InFrameAPI.Controllers
 
 
         [Microsoft.AspNetCore.Mvc.HttpGet("{id}")]
-        [ResponseType(typeof(FormConfigDTO))]
+        [ResponseType(typeof(TicketFormConfigDTO))]
         public ActionResult GetFormConfig(long id, [FromUri] long workFlowStateId = -1)
         {
-            FormConfig myConfig = DataFactory.getFormConfigById(id);
-            return this.getFormConfigDTO(myConfig, workFlowStateId);
+            TicketFormConfig myConfig = DataFactory.getTicketFormConfigById(id);
+            return this.getTicketFormConfigDTO(myConfig, workFlowStateId);
         }
 
 
         [Microsoft.AspNetCore.Mvc.HttpGet("DemandType/{id}")]
-        [ResponseType(typeof(FormConfigDTO))]
+        [ResponseType(typeof(TicketFormConfigDTO))]
         public ActionResult GetFormConfigFromFormType(long id, [FromUri] long workFlowStateId = -1)
         {
+            TicketFormConfig myConfig = DataFactory.getFormConfigByDemandType(id); 
 
-            FormConfig myConfig = DataFactory.getFormConfigByDemandType(id); 
-
-            return this.getFormConfigDTO(myConfig, workFlowStateId);
+            return this.getTicketFormConfigDTO(myConfig, workFlowStateId);
         }
 
-        protected ActionResult getFormConfigDTO(FormConfig myConfig,  long WorkflowStateId)
+        protected ActionResult getTicketFormConfigDTO(TicketFormConfig myConfig,  long WorkflowStateId)
         {
             if (myConfig == null)
             {
                 return NotFound();
             }
-            return Ok(DTOCreator.GetFormConfigDTO(myConfig,  WorkflowStateId));
+            return Ok(DTOCreator.GetTicketFormConfigDTO(myConfig,  WorkflowStateId));
         }
 
         [Microsoft.AspNetCore.Mvc.HttpGet("List")]
-        [ResponseType(typeof(List<FormConfigDTO>))]
-        public ActionResult GetFormConfigList()
+        [ResponseType(typeof(List<TicketFormConfigDTO>))]
+        public ActionResult GetTicketFormConfigList()
         {
-            List<FormConfig> listForm = DataFactory.getFormConfigList();
-            return this.getFormConfigListDTO(listForm);
+            List<TicketFormConfig> listForm = DataFactory.getTicketFormConfigList();
+            return Ok(this.getTicketFormConfigListDTO(listForm));
         }
 
-        protected ActionResult getFormConfigListDTO(List<FormConfig> myConfig)
+        protected ActionResult getTicketFormConfigListDTO(List<TicketFormConfig> myConfig)
         {
             if (myConfig == null)
             {
                 return NotFound();
             }
             
-            return Ok(DTOCreator.GetFormConfigListDTO(myConfig));
+            return Ok(DTOCreator.GetTicketFormConfigListDTO(myConfig));
         }
 
-        [Microsoft.AspNetCore.Mvc.HttpGet("FormTypes")]
-        [ResponseType(typeof(List<string>))]
-        public List<string> GetFormTypes()
-        {
-            List<string> formTypes = DataFactory.getFormTypes();
-            return formTypes;
-        }
+        //[Microsoft.AspNetCore.Mvc.HttpGet("FormTypes")]
+        //[ResponseType(typeof(List<string>))]
+        //public List<string> GetFormTypes()
+        //{
+        //    List<string> formTypes = DataFactory.getFormTypes();
+        //    return formTypes;
+        //}
 
     }
 }

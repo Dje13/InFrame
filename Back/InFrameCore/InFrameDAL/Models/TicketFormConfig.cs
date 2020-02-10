@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace InFrameFormManager.DTO
+namespace InFrameDAL.Models
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public class FormConfigDTO
+    public partial class TicketFormConfig
     {
+        public TicketFormConfig()
+        {
+            TicketFormGroup = new HashSet<TicketFormGroup>();
+        }
+
         public long Id { get; set; }
+        public long TicketTypeId { get; set; }
         public string Title { get; set; }
         public int ColumnNumber { get; set; }
         public bool Active { get; set; }
@@ -17,6 +19,7 @@ namespace InFrameFormManager.DTO
         public string CssClass { get; set; }
         public int Behavior { get; set; }
 
-        public List<FormGroupDTO> formGroups { get; set; }
+        public virtual TicketType TicketType { get; set; }
+        public virtual ICollection<TicketFormGroup> TicketFormGroup { get; set; }
     }
 }

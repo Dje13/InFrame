@@ -2,22 +2,19 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace InFrameInterfaces
+namespace InFrameFormManager.DTO
 {
-    public interface IFormConfig
+    public class TicketFormGroupDTO
     {
         public long Id { get; set; }
-        public string FormNature { get; set; }
+        public long FormConfigId { get; set; }
         public string Title { get; set; }
-        public int ColumnNumber { get; set; }
+        public int ColumnIndex { get; set; }
+        public int GroupOrder { get; set; }
         public bool Active { get; set; }
-        public string ValidationMessage { get; set; }
         public string CssClass { get; set; }
         public int Behavior { get; set; }
 
-        public List<IFormGroup> GetFormGroups();
-
-
-
+        public List<TicketFormFieldDTO> formFields { get; set; }
     }
 }

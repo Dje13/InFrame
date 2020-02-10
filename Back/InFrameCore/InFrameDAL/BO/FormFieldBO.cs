@@ -4,7 +4,7 @@ using System.Text;
 using InFrameInterfaces;
 namespace InFrameDAL.Models
 {
-    public partial class FormField:IFormField
+    public partial class TicketFormField:ITicketFormField
     {
 
         

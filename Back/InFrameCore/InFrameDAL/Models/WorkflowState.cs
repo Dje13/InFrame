@@ -8,7 +8,7 @@ namespace InFrameDAL.Models
         public WorkflowState()
         {
             Demand = new HashSet<Demand>();
-            FormField = new HashSet<FormField>();
+            TicketFormField = new HashSet<TicketFormField>();
             Transition = new HashSet<Transition>();
             TransitionStartState = new HashSet<TransitionStartState>();
             WorkFlow = new HashSet<WorkFlow>();
@@ -22,7 +22,7 @@ namespace InFrameDAL.Models
         public int Active { get; set; }
 
         public virtual ICollection<Demand> Demand { get; set; }
-        public virtual ICollection<FormField> FormField { get; set; }
+        public virtual ICollection<TicketFormField> TicketFormField { get; set; }
         public virtual ICollection<Transition> Transition { get; set; }
         public virtual ICollection<TransitionStartState> TransitionStartState { get; set; }
         public virtual ICollection<WorkFlow> WorkFlow { get; set; }

@@ -1,0 +1,5 @@
+C:\Users\Clément BRUNEAU\Documents\Projets\InFrame\Back\InFrameCore\InFrameBL\bin\Debug\InFrameBL.dll
+C:\Users\Clément BRUNEAU\Documents\Projets\InFrame\Back\InFrameCore\InFrameBL\bin\Debug\InFrameBL.pdb
+C:\Users\Clément BRUNEAU\Documents\Projets\InFrame\Back\InFrameCore\InFrameBL\obj\Debug\InFrameBL.csprojAssemblyReference.cache
+C:\Users\Clément BRUNEAU\Documents\Projets\InFrame\Back\InFrameCore\InFrameBL\obj\Debug\InFrameBL.dll
+C:\Users\Clément BRUNEAU\Documents\Projets\InFrame\Back\InFrameCore\InFrameBL\obj\Debug\InFrameBL.pdb

@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
-namespace InFrameDAL.Models
+namespace InFrameFormManager.DTO
 {
-    public partial class FormField
+    public class TicketFormFieldDTO
     {
+
         public long Id { get; set; }
         public long FormGroupId { get; set; }
         public string FieldName { get; set; }
         public string FieldType { get; set; }
         public string FieldLabel { get; set; }
         public bool IsDynamic { get; set; }
-        public string FieldParameters { get; set; }
+        public Dictionary<string,object> FieldParameters { get; set; }
         public int FieldOrder { get; set; }
         public string Tooltip { get; set; }
         public string DefaultValue { get; set; }
@@ -20,7 +22,5 @@ namespace InFrameDAL.Models
         public string CssClass { get; set; }
         public int Behavior { get; set; }
 
-        public virtual FormGroup FormGroup { get; set; }
-        public virtual WorkflowState WorkflowState { get; set; }
     }
 }

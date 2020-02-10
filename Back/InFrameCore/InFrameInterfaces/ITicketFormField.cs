@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace InFrameFormManager.DTO
+namespace InFrameInterfaces
 {
-    public class FormFieldDTO
+    public interface ITicketFormField
     {
 
         public long Id { get; set; }
@@ -13,7 +13,7 @@ namespace InFrameFormManager.DTO
         public string FieldType { get; set; }
         public string FieldLabel { get; set; }
         public bool IsDynamic { get; set; }
-        public Dictionary<string,object> FieldParameters { get; set; }
+        public string FieldParameters { get; set; }
         public int FieldOrder { get; set; }
         public string Tooltip { get; set; }
         public string DefaultValue { get; set; }
