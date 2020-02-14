@@ -8,6 +8,8 @@ using InFrameDAL.Models;
 using InFrameFormManager;
 using System.Web.Http.Description;
 using InFrameDAL;
+using System.Net.Http;
+using InFrameDAL.DTO;
 
 namespace InFrameAPI.Controllers
 {
@@ -15,67 +17,32 @@ namespace InFrameAPI.Controllers
     [ApiController]
     public class TicketController : ControllerBase
     {
-        // GET: api/Ticket
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
-        //// GET: api/Ticket/5
-        //[HttpGet("{id}", Name = "Get")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
-        //// POST: api/Ticket
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
-
-        //// PUT: api/Ticket/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-
-        //// DELETE: api/ApiWithActions/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
-
-
-        [Microsoft.AspNetCore.Mvc.HttpGet("List")]
+        [HttpGet("List")]
         [ResponseType(typeof(List<Ticket>))]
-        public List<Ticket> GetTicketList()
+        public ActionResult GetTicketList()
         {
             List<Ticket> ticketList = DataFactory.getTicketList();
 
-            return ticketList;
+            return Ok(ticketList);
         }
 
-        [Microsoft.AspNetCore.Mvc.HttpGet("{id}")]
+        [HttpGet("{id}")]
         [ResponseType(typeof(Ticket))]
-        public Ticket GetTicket(int id)
+        public ActionResult GetTicket(int id)
         {
-
             Ticket ticket = DataFactory.getTicket(id);
 
-            return ticket;
+            return Ok(ticket);
         }
 
-        //protected ActionResult getTicketListDTO(List<Ticket> tickets)
-        //{
-        //    if (tickets == null)
-        //    {
-        //        return NotFound();
-        //    }
+        [HttpPost]
+        public ActionResult CreateTicket(TicketDTO ticket)
+        {
+            //DataFactory.AddTicket(ticket);
+            TicketDTO resultat = new TicketDTO();
+            return Ok(resultat);
+        }
 
-        //    return Ok(DTOCreator.GetTicketListDTO(tickets));
-        //}
 
     }
 }

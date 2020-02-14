@@ -22,14 +22,14 @@ namespace InFrameDAL.Models
         public virtual DbSet<DemandTransitionHisto> DemandTransitionHisto { get; set; }
         public virtual DbSet<DemandType> DemandType { get; set; }
         public virtual DbSet<DemandTypeDemandDynProp> DemandTypeDemandDynProp { get; set; }
-        public virtual DbSet<FormConfig> FormConfig { get; set; }
-        public virtual DbSet<FormField> FormField { get; set; }
-        public virtual DbSet<FormGroup> FormGroup { get; set; }
         public virtual DbSet<Modalist> Modalist { get; set; }
         public virtual DbSet<Ticket> Ticket { get; set; }
         public virtual DbSet<TicketDynProp> TicketDynProp { get; set; }
         public virtual DbSet<TicketDynPropValue> TicketDynPropValue { get; set; }
         public virtual DbSet<TicketDynPropValueHisto> TicketDynPropValueHisto { get; set; }
+        public virtual DbSet<TicketFormConfig> TicketFormConfig { get; set; }
+        public virtual DbSet<TicketFormField> TicketFormField { get; set; }
+        public virtual DbSet<TicketFormGroup> TicketFormGroup { get; set; }
         public virtual DbSet<TicketTransitionHisto> TicketTransitionHisto { get; set; }
         public virtual DbSet<TicketType> TicketType { get; set; }
         public virtual DbSet<TicketTypeTicketDynProp> TicketTypeTicketDynProp { get; set; }
@@ -293,134 +293,6 @@ namespace InFrameDAL.Models
                     .HasConstraintName("fk_DemandType_DemandDynProp_typeId");
             });
 
-            modelBuilder.Entity<FormConfig>(entity =>
-            {
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Active).HasColumnName("active");
-
-                entity.Property(e => e.Behavior).HasColumnName("behavior");
-
-                entity.Property(e => e.ColumnNumber).HasColumnName("columnNumber");
-
-                entity.Property(e => e.CssClass)
-                    .HasColumnName("cssClass")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.FormNature)
-                    .IsRequired()
-                    .HasColumnName("formNature")
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Title)
-                    .IsRequired()
-                    .HasColumnName("title")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ValidationMessage)
-                    .HasColumnName("validationMessage")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-            });
-
-            modelBuilder.Entity<FormField>(entity =>
-            {
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Active).HasColumnName("active");
-
-                entity.Property(e => e.Behavior).HasColumnName("behavior");
-
-                entity.Property(e => e.CssClass)
-                    .HasColumnName("cssClass")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DefaultValue)
-                    .HasColumnName("defaultValue")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.FieldLabel)
-                    .IsRequired()
-                    .HasColumnName("fieldLabel")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.FieldName)
-                    .IsRequired()
-                    .HasColumnName("fieldName")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.FieldOrder).HasColumnName("fieldOrder");
-
-                entity.Property(e => e.FieldParameters)
-                    .IsRequired()
-                    .HasColumnName("fieldParameters")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.FieldType)
-                    .IsRequired()
-                    .HasColumnName("fieldType")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.FormGroupId).HasColumnName("formGroupId");
-
-                entity.Property(e => e.IsDynamic).HasColumnName("isDynamic");
-
-                entity.Property(e => e.Tooltip)
-                    .HasColumnName("tooltip")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.WorkflowStateId).HasColumnName("workflowStateId");
-
-                entity.HasOne(d => d.FormGroup)
-                    .WithMany(p => p.FormField)
-                    .HasForeignKey(d => d.FormGroupId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_FormField_formGroupId");
-
-                entity.HasOne(d => d.WorkflowState)
-                    .WithMany(p => p.FormField)
-                    .HasForeignKey(d => d.WorkflowStateId)
-                    .HasConstraintName("fk_FormField_workflowStateId");
-            });
-
-            modelBuilder.Entity<FormGroup>(entity =>
-            {
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Active).HasColumnName("active");
-
-                entity.Property(e => e.Behavior).HasColumnName("behavior");
-
-                entity.Property(e => e.ColumnIndex).HasColumnName("columnIndex");
-
-                entity.Property(e => e.CssClass)
-                    .HasColumnName("cssClass")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.FormConfigId).HasColumnName("formConfigId");
-
-                entity.Property(e => e.GroupOrder).HasColumnName("groupOrder");
-
-                entity.Property(e => e.Title)
-                    .IsRequired()
-                    .HasColumnName("title")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.HasOne(d => d.FormConfig)
-                    .WithMany(p => p.FormGroup)
-                    .HasForeignKey(d => d.FormConfigId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_FormGroup_formConfigId");
-            });
-
             modelBuilder.Entity<Modalist>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -609,6 +481,136 @@ namespace InFrameDAL.Models
                     .HasConstraintName("fk_TicketDynPropValueHisto_TicketId");
             });
 
+            modelBuilder.Entity<TicketFormConfig>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Active).HasColumnName("active");
+
+                entity.Property(e => e.Behavior).HasColumnName("behavior");
+
+                entity.Property(e => e.ColumnNumber).HasColumnName("columnNumber");
+
+                entity.Property(e => e.CssClass)
+                    .HasColumnName("cssClass")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.TicketTypeId).HasColumnName("ticketTypeId");
+
+                entity.Property(e => e.Title)
+                    .IsRequired()
+                    .HasColumnName("title")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ValidationMessage)
+                    .HasColumnName("validationMessage")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.TicketType)
+                    .WithMany(p => p.TicketFormConfig)
+                    .HasForeignKey(d => d.TicketTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_TicketFormConfig_ticketTypeId");
+            });
+
+            modelBuilder.Entity<TicketFormField>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Active).HasColumnName("active");
+
+                entity.Property(e => e.Behavior).HasColumnName("behavior");
+
+                entity.Property(e => e.CssClass)
+                    .HasColumnName("cssClass")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DefaultValue)
+                    .HasColumnName("defaultValue")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FieldLabel)
+                    .IsRequired()
+                    .HasColumnName("fieldLabel")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FieldName)
+                    .IsRequired()
+                    .HasColumnName("fieldName")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FieldOrder).HasColumnName("fieldOrder");
+
+                entity.Property(e => e.FieldParameters)
+                    .IsRequired()
+                    .HasColumnName("fieldParameters")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FieldType)
+                    .IsRequired()
+                    .HasColumnName("fieldType")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FormGroupId).HasColumnName("formGroupId");
+
+                entity.Property(e => e.IsDynamic).HasColumnName("isDynamic");
+
+                entity.Property(e => e.Tooltip)
+                    .HasColumnName("tooltip")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.WorkflowStateId).HasColumnName("workflowStateId");
+
+                entity.HasOne(d => d.FormGroup)
+                    .WithMany(p => p.TicketFormField)
+                    .HasForeignKey(d => d.FormGroupId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_TicketFormField_formGroupId");
+
+                entity.HasOne(d => d.WorkflowState)
+                    .WithMany(p => p.TicketFormField)
+                    .HasForeignKey(d => d.WorkflowStateId)
+                    .HasConstraintName("fk_TicketFormField_workflowStateId");
+            });
+
+            modelBuilder.Entity<TicketFormGroup>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Active).HasColumnName("active");
+
+                entity.Property(e => e.Behavior).HasColumnName("behavior");
+
+                entity.Property(e => e.ColumnIndex).HasColumnName("columnIndex");
+
+                entity.Property(e => e.CssClass)
+                    .HasColumnName("cssClass")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FormConfigId).HasColumnName("formConfigId");
+
+                entity.Property(e => e.GroupOrder).HasColumnName("groupOrder");
+
+                entity.Property(e => e.Title)
+                    .IsRequired()
+                    .HasColumnName("title")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.FormConfig)
+                    .WithMany(p => p.TicketFormGroup)
+                    .HasForeignKey(d => d.FormConfigId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_TicketFormGroup_formConfigId");
+            });
+
             modelBuilder.Entity<TicketTransitionHisto>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -669,6 +671,14 @@ namespace InFrameDAL.Models
                     .HasColumnName("typeShortName")
                     .HasMaxLength(10)
                     .IsUnicode(false);
+
+                entity.Property(e => e.WorkflowId).HasColumnName("workflowId");
+
+                entity.HasOne(d => d.Workflow)
+                    .WithMany(p => p.TicketType)
+                    .HasForeignKey(d => d.WorkflowId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_TicketType_workflowId");
             });
 
             modelBuilder.Entity<TicketTypeTicketDynProp>(entity =>

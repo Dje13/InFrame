@@ -4,24 +4,29 @@ using System.Text;
 using InFrameInterfaces.ObjWithDynProp;
 using InFrameFormManager;
 using System.Linq;
-using InFrameInterfaces.Ticket;
 
 namespace InFrameDAL.Models
 {
-    public partial class Ticket : ITicket
-    {
-        //public override IObjType getType()
-        //{
-        //    return null;
-        //}
+    public partial class Ticket : ObjWithDynProp,IObjWithDynProp
+    {  
+        
+        /// <summary>
+       /// 
+       /// </summary>
+       /// <returns></returns>
+        public override IObjType getType()
+        {
+            return this.Type;
+        }
 
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <returns></returns>
-        //public override Dictionary<string, IObjDynPropValue> getValues()
-        //{
-        //    return TicketDynPropValue.ToDictionary(s => s.DynProp.DynPropName, s => (IObjDynPropValue)s, StringComparer.CurrentCultureIgnoreCase);
-        //}
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override Dictionary<string, IObjDynPropValue> getValues()
+        {
+            return this.TicketDynPropValue.ToDictionary(s => s.DynProp.DynPropName, s => (IObjDynPropValue)s, StringComparer.CurrentCultureIgnoreCase);
+        }
+
     }
 }

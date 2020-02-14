@@ -5,7 +5,6 @@ using InFrameFormManager.DTO;
 using InFrameInterfaces;
 using InFrameTools;
 using Newtonsoft.Json;
-using InFrameInterfaces.Ticket;
 
 namespace InFrameFormManager
 {
@@ -21,13 +20,13 @@ namespace InFrameFormManager
         /// <param name="myConfig"></param>
         /// <param name="WorkflowStateId"></param>
         /// <returns></returns>
-        public static FormConfigDTO GetFormConfigDTO(IFormConfig myConfig, long WorkflowStateId)
+        public static TicketFormConfigDTO GetTicketFormConfigDTO(ITicketFormConfig myConfig, long WorkflowStateId)
         {
-            FormConfigDTO result = new FormConfigDTO();
+            TicketFormConfigDTO result = new TicketFormConfigDTO();
 
             ToolBox.MapObject(myConfig, result, true);
-            result.formGroups = new List<FormGroupDTO>();
-            foreach (IFormGroup curGroup in myConfig.GetFormGroups().Where(g=>g.Active).OrderBy(s=>s.GroupOrder))
+            result.formGroups = new List<TicketFormGroupDTO>();
+            foreach (ITicketFormGroup curGroup in myConfig.GetFormGroups().Where(g=>g.Active).OrderBy(s=>s.GroupOrder))
             {
                 result.formGroups.Add(GetFormGroupDTO(curGroup, WorkflowStateId));
             }
@@ -35,13 +34,13 @@ namespace InFrameFormManager
         }
 
 
-        public static List<FormConfigDTO> GetFormConfigListDTO(IEnumerable<IFormConfig> listForm)
+        public static List<TicketFormConfigDTO> GetTicketFormConfigListDTO(IEnumerable<ITicketFormConfig> listForm)
         {
-            List<FormConfigDTO> result = new List<FormConfigDTO>();
+            List<TicketFormConfigDTO> result = new List<TicketFormConfigDTO>();
 
-            foreach (IFormConfig formulaire in listForm)
+            foreach (ITicketFormConfig formulaire in listForm)
             {
-                FormConfigDTO resultTemp = new FormConfigDTO();
+                TicketFormConfigDTO resultTemp = new TicketFormConfigDTO();
 
                 ToolBox.MapObject(formulaire, resultTemp, true);
                 resultTemp.formGroups = null;
@@ -74,17 +73,17 @@ namespace InFrameFormManager
         /// <param name="myGroup"></param>
         /// <param name="WorkflowStateId"></param>
         /// <returns></returns>
-        public static FormGroupDTO GetFormGroupDTO(IFormGroup myGroup, long WorkflowStateId)
+        public static TicketFormGroupDTO GetFormGroupDTO(ITicketFormGroup myGroup, long WorkflowStateId)
         {
-            FormGroupDTO result = new FormGroupDTO();
+            TicketFormGroupDTO result = new TicketFormGroupDTO();
             List<string> unMappedField = new List<string> { "fieldParameters" };
             ToolBox.MapObject(myGroup, result, true);
-            result.formFields = new List<FormFieldDTO>();
-            foreach (IFormField curField in myGroup.GetFormFields().Where(f=>f.WorkflowStateId == WorkflowStateId || f.WorkflowStateId == null) .OrderBy(f => f.WorkflowStateId))
+            result.formFields = new List<TicketFormFieldDTO>();
+            foreach (ITicketFormField curField in myGroup.GetFormFields().Where(f=>f.WorkflowStateId == WorkflowStateId || f.WorkflowStateId == null) .OrderBy(f => f.WorkflowStateId))
             {
                 if (result.formFields.Where(s => s.FieldName == curField.FieldName && s.Active).FirstOrDefault() == null) // Check field not already defined
                 {
-                    FormFieldDTO curFieldDTO = new FormFieldDTO();
+                    TicketFormFieldDTO curFieldDTO = new TicketFormFieldDTO();
                     ToolBox.MapObject(curField, curFieldDTO, unMappedField: unMappedField);
                     curFieldDTO.FieldParameters = JsonConvert.DeserializeObject<Dictionary<string, object>>(curField.FieldParameters);
                     // TODO Ajouter les traitements pour les parameters

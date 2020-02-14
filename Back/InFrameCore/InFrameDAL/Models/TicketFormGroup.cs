@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace InFrameInterfaces
+namespace InFrameDAL.Models
 {
-    public interface IFormGroup
+    public partial class TicketFormGroup
     {
+        public TicketFormGroup()
+        {
+            TicketFormField = new HashSet<TicketFormField>();
+        }
 
         public long Id { get; set; }
         public long FormConfigId { get; set; }
@@ -16,8 +19,7 @@ namespace InFrameInterfaces
         public string CssClass { get; set; }
         public int Behavior { get; set; }
 
-        public List<IFormField> GetFormFields();
-
-
+        public virtual TicketFormConfig FormConfig { get; set; }
+        public virtual ICollection<TicketFormField> TicketFormField { get; set; }
     }
 }

@@ -5,13 +5,13 @@ using System.Text;
 using InFrameInterfaces;
 namespace InFrameDAL.Models
 {
-    public partial class FormConfig:IFormConfig
+    public partial class TicketFormConfig: ITicketFormConfig
     {
 
 
-        public List<IFormGroup> GetFormGroups()
+        public List<ITicketFormGroup> GetFormGroups()
         {
-            return this.FormGroup.Select(s => (IFormGroup)s).ToList();
+            return this.TicketFormGroup.Select(s => (ITicketFormGroup)s).ToList();
         }
     }
 }

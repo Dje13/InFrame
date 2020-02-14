@@ -11,44 +11,64 @@ namespace InFrameDAL
     {
 
         #region "Form Management"
-        public static FormConfig getFormConfigById(long id)
+        public static TicketFormConfig getTicketFormConfigById(long id)
         {
-            FormConfig Result;
+            TicketFormConfig Result;
             using (InFrameContext db = new InFrameContext())
             {
-                Result = db.FormConfig.Include("FormGroup").Include("FormGroup.FormField")
+                Result = db.TicketFormConfig.Include("TicketFormGroup").Include("TicketFormGroup.TicketFormField")
                     .Where(s => s.Id == id && s.Active).FirstOrDefault();
             }
             return Result;
         }
 
-        public static FormConfig getFormConfigByDemandType(long id)
+        public static TicketFormConfig getFormConfigByDemandType(long id)
         {
-            FormConfig Result;
+            TicketFormConfig Result;
             using (InFrameContext db = new InFrameContext())
             {
-                Result = db.FormConfig.Include("FormGroup").Include("FormGroup.FormField")
+                Result = db.TicketFormConfig.Include("TicketFormGroup").Include("TicketFormGroup.FormField")
                     .Where(s => s.Active).FirstOrDefault();
             }
             return Result;
         }
 
-        public static List<FormConfig> getFormConfigList()
+        public static List<TicketFormConfig> getTicketFormConfigList()
         {
-            List<FormConfig> Result;
+            List<TicketFormConfig> Result;
             using (InFrameContext db = new InFrameContext())
             {
-                Result = db.FormConfig.Where(s => s.Active).ToList();
+                Result = db.TicketFormConfig.Where(s => s.Active).ToList();
             }
             return Result;
         }
 
-        public static List<string> getFormTypes()
+        //public static List<string> getFormTypes()
+        //{
+        //    List<string> Result;
+        //    using (InFrameContext db = new InFrameContext())
+        //    {
+        //        Result = db.TicketFormConfig.Where(s => s.Active).Select(y => y.FormNature).Distinct().ToList();//.Select(x => new SelectListItem { Value = x.FormNature, Text = x.FormNature});
+        //    }
+        //    return Result;
+        //}
+
+        public static List<string> getTicketTypes()
         {
             List<string> Result;
             using (InFrameContext db = new InFrameContext())
             {
-                Result = db.FormConfig.Where(s => s.Active).Select(y => y.FormNature).Distinct().ToList();//.Select(x => new SelectListItem { Value = x.FormNature, Text = x.FormNature});
+                Result = db.Modalist.Where(s => s.ModalistGroup == "TicketType").Select(x => x.ModalistLabel).ToList();
+            }
+            return Result;
+        }
+
+        public static List<string> getDropdownItems(string itemType)
+        {
+            List<string> Result;
+            using (InFrameContext db = new InFrameContext())
+            {
+                Result = db.Modalist.Where(s => s.ModalistGroup == itemType).Select(x => x.ModalistLabel).ToList();
             }
             return Result;
         }
@@ -93,6 +113,16 @@ namespace InFrameDAL
                 Result = db.Ticket.Where(x => x.Id == id).FirstOrDefault();
             }
             return Result;
+        }
+
+        public static void AddTicket(Ticket ticket)
+        {
+
+            using (InFrameContext db = new InFrameContext())
+            {
+                db.Ticket.Add(ticket);
+                db.SaveChanges();
+            }
         }
 
         #endregion

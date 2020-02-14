@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace InFrameFormManager.DTO
+namespace InFrameInterfaces
 {
-    public class FormGroupDTO
+    public interface ITicketFormGroup
     {
+
         public long Id { get; set; }
         public long FormConfigId { get; set; }
         public string Title { get; set; }
@@ -15,6 +16,8 @@ namespace InFrameFormManager.DTO
         public string CssClass { get; set; }
         public int Behavior { get; set; }
 
-        public List<FormFieldDTO> formFields { get; set; }
+        public List<ITicketFormField> GetFormFields();
+
+
     }
 }

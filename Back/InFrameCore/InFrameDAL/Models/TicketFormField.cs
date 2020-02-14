@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace InFrameInterfaces
+namespace InFrameDAL.Models
 {
-    public interface IFormField
+    public partial class TicketFormField
     {
-
         public long Id { get; set; }
         public long FormGroupId { get; set; }
         public string FieldName { get; set; }
@@ -22,5 +20,7 @@ namespace InFrameInterfaces
         public string CssClass { get; set; }
         public int Behavior { get; set; }
 
+        public virtual TicketFormGroup FormGroup { get; set; }
+        public virtual WorkflowState WorkflowState { get; set; }
     }
 }
