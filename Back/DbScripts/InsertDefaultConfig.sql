@@ -68,7 +68,7 @@ GO
 
 
 INSERT INTO TicketFormConfig
-           (typeId
+           (TickettypeId
            ,title
            ,columnNumber
            ,active
@@ -77,12 +77,12 @@ INSERT INTO TicketFormConfig
            ,behavior)
 
 SELECT ID ,'Formulaire de test',2,1,'Ouais ça marche','',0
-FROM DemandType WHERE typeInternalName='TypeTest'
+FROM TicketType WHERE typeInternalName='TypeTest'
 
 
 
 INSERT INTO TicketFormConfig
-           (typeId
+           (TickettypeId
            ,title
            ,columnNumber
            ,active
@@ -91,10 +91,10 @@ INSERT INTO TicketFormConfig
            ,behavior)
 
 SELECT ID ,'Formulaire de test2',2,1,'Ouais ça marche2','',0
-FROM DemandType WHERE typeInternalName='TypeTest2'
+FROM TicketType WHERE typeInternalName='TypeTest2'
 
 INSERT INTO TicketFormConfig
-           (typeId
+           (TickettypeId
            ,title
            ,columnNumber
            ,active
@@ -103,7 +103,7 @@ INSERT INTO TicketFormConfig
            ,behavior)
 
 SELECT ID ,'Formulaire de test2',2,1,'Ouais ça marche3','',0
-FROM DemandType WHERE typeInternalName='TypeTest3'
+FROM TicketType WHERE typeInternalName='TypeTest3'
 
 
 
@@ -118,7 +118,7 @@ INSERT INTO TicketFormGroup
            ,cssClass
 	   ,behavior)
     SELECT id, 'Informations personnelles',1,1,1,'',0
-	from FormConfig where title='Formulaire de test'
+	from TicketFormConfig where title='Formulaire de test'
 
 
 INSERT INTO TicketFormField
