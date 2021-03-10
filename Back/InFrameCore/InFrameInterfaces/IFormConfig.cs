@@ -4,10 +4,10 @@ using System.Text;
 
 namespace InFrameInterfaces
 {
-    public interface ITicketFormConfig
+    public interface IFormConfig
     {
         public long Id { get; set; }
-        public long TicketTypeId { get; set; }
+        public long TypeId { get; set; }
         public string Title { get; set; }
         public int ColumnNumber { get; set; }
         public bool Active { get; set; }
@@ -15,7 +15,7 @@ namespace InFrameInterfaces
         public string CssClass { get; set; }
         public int Behavior { get; set; }
 
-        public List<ITicketFormGroup> GetFormGroups();
+        public List<IFormGroup> GetFormGroups();
 
 
 

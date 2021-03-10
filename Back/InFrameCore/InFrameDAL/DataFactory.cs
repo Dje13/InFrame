@@ -43,63 +43,48 @@ namespace InFrameDAL
             return Result;
         }
 
-        //public static List<string> getFormTypes()
-        //{
-        //    List<string> Result;
-        //    using (InFrameContext db = new InFrameContext())
-        //    {
-        //        Result = db.TicketFormConfig.Where(s => s.Active).Select(y => y.FormNature).Distinct().ToList();//.Select(x => new SelectListItem { Value = x.FormNature, Text = x.FormNature});
-        //    }
-        //    return Result;
-        //}
-
-        public static List<string> getTicketTypes()
+        public static List<string> getFormTypes()
         {
             List<string> Result;
             using (InFrameContext db = new InFrameContext())
             {
-                Result = db.Modalist.Where(s => s.ModalistGroup == "TicketType").Select(x => x.ModalistLabel).ToList();
+                Result = db.TicketFormConfig.Where(s => s.Active).Select(y => y.Title).Distinct().ToList();//.Select(x => new SelectListItem { Value = x.FormNature, Text = x.FormNature});
+                // Result = db.TicketFormConfig.Select(y => y.Title).Distinct().ToList();//.Select(x => new SelectListItem { Value = x.FormNature, Text = x.FormNature});
             }
             return Result;
         }
 
-        public static List<string> getDropdownItems(string itemType)
+        public static List<TicketType> getTicketTypes()
         {
-            List<string> Result;
+            List<TicketType> Result;
             using (InFrameContext db = new InFrameContext())
             {
-                Result = db.Modalist.Where(s => s.ModalistGroup == itemType).Select(x => x.ModalistLabel).ToList();
+                Result = db.TicketType.Where(s => s.Active ==1).ToList();
             }
             return Result;
         }
 
+        
         #endregion
 
-        #region "Demand Management"
-
-        public static Demand getDemandById(long id)
-        {
-
-            Demand Result;
-            using (InFrameContext db = new InFrameContext())
-            {
-                Result = db.Demand.Include("DemandDynPropValue").Include("DemandDynPropValue.DynProp").Include("Type").Include("WorkflowState")
-                    .Where(d => d.Id == id ).FirstOrDefault();
-            }
-            return Result;
-        }
-
-        #endregion
 
         #region "Ticket Management"
 
-        public static List<Ticket> getTicketList()
+        public static List<Ticket> getTicketList(long typeId = -1)
         {
 
             List<Ticket> Result;
             using (InFrameContext db = new InFrameContext())
             {
-                Result = db.Ticket.ToList();
+                if (typeId == -1)
+                {
+                    Result = db.Ticket.ToList();
+                }
+                else
+                {
+                    Result = db.Ticket.Where(t=>t.TypeId == typeId).ToList();
+                }
+                
             }
             return Result;
         }

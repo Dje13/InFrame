@@ -19,12 +19,24 @@ namespace InFrameAPI.Controllers
     {
         [HttpGet("List")]
         [ResponseType(typeof(List<Ticket>))]
-        public ActionResult GetTicketList()
+        public ActionResult GetTicketList([FromQuery] long typeId)
         {
-            List<Ticket> ticketList = DataFactory.getTicketList();
+            List<Ticket> ticketList = DataFactory.getTicketList(typeId);
 
             return Ok(ticketList);
         }
+
+       
+
+        [HttpGet("ListType")]
+        [ResponseType(typeof(List<string>))]
+        public ActionResult GetTicketTypeList()
+        {
+            List<TicketType> ticketTypeList = DataFactory.getTicketTypes();
+
+            return Ok(ticketTypeList);
+        }
+
 
         [HttpGet("{id}")]
         [ResponseType(typeof(Ticket))]

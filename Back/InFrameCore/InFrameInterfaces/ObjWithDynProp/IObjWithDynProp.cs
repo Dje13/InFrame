@@ -8,9 +8,7 @@ namespace InFrameInterfaces.ObjWithDynProp
     {
 
         public long Id { get; set; }
-        public long WorkFlowId { get; set; }
-        public long typeid { get; set; }
-        public long WorkflowStateId { get; set; }
+       
 
         public IObjType getType();
 

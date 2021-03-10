@@ -13,7 +13,7 @@ namespace InFrameFormManager
     /// </summary>
     public static class DTOCreator
     {
-
+        /*
         /// <summary>
         /// 
         /// </summary>
@@ -92,6 +92,6 @@ namespace InFrameFormManager
             }
             return result;
         }
-
+*/
     }
 }

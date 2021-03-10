@@ -3,3 +3,9 @@ C:\Users\Clément BRUNEAU\Documents\Projets\InFrame\Back\InFrameCore\InFrameBL\b
 C:\Users\Clément BRUNEAU\Documents\Projets\InFrame\Back\InFrameCore\InFrameBL\obj\Debug\InFrameBL.csprojAssemblyReference.cache
 C:\Users\Clément BRUNEAU\Documents\Projets\InFrame\Back\InFrameCore\InFrameBL\obj\Debug\InFrameBL.dll
 C:\Users\Clément BRUNEAU\Documents\Projets\InFrame\Back\InFrameCore\InFrameBL\obj\Debug\InFrameBL.pdb
+D:\FWFormulaire\Sources\InFrame\Back\InFrameCore\InFrameBL\bin\Debug\InFrameBL.dll
+D:\FWFormulaire\Sources\InFrame\Back\InFrameCore\InFrameBL\bin\Debug\InFrameBL.pdb
+D:\FWFormulaire\Sources\InFrame\Back\InFrameCore\InFrameBL\obj\Debug\InFrameBL.csproj.CoreCompileInputs.cache
+D:\FWFormulaire\Sources\InFrame\Back\InFrameCore\InFrameBL\obj\Debug\InFrameBL.dll
+D:\FWFormulaire\Sources\InFrame\Back\InFrameCore\InFrameBL\obj\Debug\InFrameBL.pdb
+D:\FWFormulaire\Sources\InFrame\Back\InFrameCore\InFrameBL\obj\Debug\InFrameBL.csprojAssemblyReference.cache

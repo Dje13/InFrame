@@ -13,15 +13,7 @@ namespace InFrameDAL
     public static class DTOFactory
     {
 
-        public static DemandDTO getDemandConfigDTO(Demand myDemand)
-        {
-            DemandDTO result = new DemandDTO();
-            ToolBox.MapObject(myDemand, result, true);
-
-            result.dynPropValues = myDemand.getRealValues();
-            return result;
-
-        }
+        
 
     }
 }

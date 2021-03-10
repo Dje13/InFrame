@@ -14,6 +14,7 @@ namespace InFrameDAL.Models
 
         public long Id { get; set; }
         public long TypeId { get; set; }
+        public long WorkflowStateId { get; set; }
         public string TicketTitle { get; set; }
         public string TicketContent { get; set; }
         public long TicketStatus { get; set; }
@@ -24,6 +25,7 @@ namespace InFrameDAL.Models
         public string Project { get; set; }
 
         public virtual TicketType Type { get; set; }
+        public virtual WorkflowState WorkflowState { get; set; }
         public virtual ICollection<TicketDynPropValue> TicketDynPropValue { get; set; }
         public virtual ICollection<TicketDynPropValueHisto> TicketDynPropValueHisto { get; set; }
         public virtual ICollection<TicketTransitionHisto> TicketTransitionHisto { get; set; }

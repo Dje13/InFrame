@@ -51,7 +51,7 @@ namespace InFrameAPI.Controllers
             {
                 return NotFound();
             }
-            return Ok(DTOCreator.GetTicketFormConfigDTO(myConfig,  WorkflowStateId));
+            return Ok(null);
         }
 
         [Microsoft.AspNetCore.Mvc.HttpGet("List")]
@@ -69,16 +69,16 @@ namespace InFrameAPI.Controllers
                 return NotFound();
             }
             
-            return Ok(DTOCreator.GetTicketFormConfigListDTO(myConfig));
+            return Ok(null);
         }
 
-        //[Microsoft.AspNetCore.Mvc.HttpGet("FormTypes")]
-        //[ResponseType(typeof(List<string>))]
-        //public List<string> GetFormTypes()
-        //{
-        //    List<string> formTypes = DataFactory.getFormTypes();
-        //    return formTypes;
-        //}
+        [Microsoft.AspNetCore.Mvc.HttpGet("FormTypes")]
+        [ResponseType(typeof(List<string>))]
+        public List<string> GetFormTypes()
+        {
+           List<string> formTypes = DataFactory.getFormTypes();
+           return formTypes;
+        }
 
     }
 }

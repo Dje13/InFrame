@@ -7,8 +7,6 @@ namespace InFrameDAL.Models
     {
         public WorkFlow()
         {
-            Demand = new HashSet<Demand>();
-            DemandType = new HashSet<DemandType>();
             TicketType = new HashSet<TicketType>();
             WorkFlowTransition = new HashSet<WorkFlowTransition>();
         }
@@ -20,8 +18,6 @@ namespace InFrameDAL.Models
         public long StartStateId { get; set; }
 
         public virtual WorkflowState StartState { get; set; }
-        public virtual ICollection<Demand> Demand { get; set; }
-        public virtual ICollection<DemandType> DemandType { get; set; }
         public virtual ICollection<TicketType> TicketType { get; set; }
         public virtual ICollection<WorkFlowTransition> WorkFlowTransition { get; set; }
     }

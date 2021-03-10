@@ -9,6 +9,7 @@ namespace InFrameDAL.Models
         {
             Ticket = new HashSet<Ticket>();
             TicketFormConfig = new HashSet<TicketFormConfig>();
+            TicketListField = new HashSet<TicketListField>();
             TicketTypeTicketDynProp = new HashSet<TicketTypeTicketDynProp>();
         }
 
@@ -24,6 +25,7 @@ namespace InFrameDAL.Models
         public virtual WorkFlow Workflow { get; set; }
         public virtual ICollection<Ticket> Ticket { get; set; }
         public virtual ICollection<TicketFormConfig> TicketFormConfig { get; set; }
+        public virtual ICollection<TicketListField> TicketListField { get; set; }
         public virtual ICollection<TicketTypeTicketDynProp> TicketTypeTicketDynProp { get; set; }
     }
 }

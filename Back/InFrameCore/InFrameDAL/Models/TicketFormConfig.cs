@@ -11,7 +11,7 @@ namespace InFrameDAL.Models
         }
 
         public long Id { get; set; }
-        public long TicketTypeId { get; set; }
+        public long TypeId { get; set; }
         public string Title { get; set; }
         public int ColumnNumber { get; set; }
         public bool Active { get; set; }
@@ -19,7 +19,7 @@ namespace InFrameDAL.Models
         public string CssClass { get; set; }
         public int Behavior { get; set; }
 
-        public virtual TicketType TicketType { get; set; }
+        public virtual TicketType Type { get; set; }
         public virtual ICollection<TicketFormGroup> TicketFormGroup { get; set; }
     }
 }

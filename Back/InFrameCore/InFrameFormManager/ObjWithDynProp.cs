@@ -10,9 +10,7 @@ namespace InFrameFormManager
     public abstract class ObjWithDynProp : IObjWithDynProp
     {
         public long Id { get; set; }
-        public long WorkFlowId { get; set; }
-        public long typeid { get; set; }
-        public long WorkflowStateId { get; set; }
+       
 
         public abstract IObjType getType();
         public abstract Dictionary<string, IObjDynPropValue> getValues();

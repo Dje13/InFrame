@@ -15,15 +15,7 @@ namespace InFrameAPI.Controllers
     [ApiController]
     public class SharedController : ControllerBase
     {
-        // GET: api/Shared
-        [Microsoft.AspNetCore.Mvc.HttpGet("TicketTypes")]
-        [ResponseType(typeof(List<string>))]
-        public List<string> GetTicketTypes()
-        {
-            List<string> tickets = DataFactory.getDropdownItems("TicketTypes");
-
-            return tickets;
-        }
+       
 
     }
 }

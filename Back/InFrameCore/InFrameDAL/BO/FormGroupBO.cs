@@ -5,7 +5,7 @@ using System.Text;
 using InFrameInterfaces;
 namespace InFrameDAL.Models
 {
-    public partial class TicketFormGroup:ITicketFormGroup
+    public partial class TicketFormGroup:IFormGroup
     {
         public List<ITicketFormField> GetFormFields()
         {

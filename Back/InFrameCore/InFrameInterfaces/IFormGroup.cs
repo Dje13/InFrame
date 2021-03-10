@@ -4,7 +4,7 @@ using System.Text;
 
 namespace InFrameInterfaces
 {
-    public interface ITicketFormGroup
+    public interface IFormGroup
     {
 
         public long Id { get; set; }
